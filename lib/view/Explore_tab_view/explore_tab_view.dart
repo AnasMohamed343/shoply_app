@@ -132,7 +132,16 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CustomSearchTextField(),
+                          CustomSearchTextField(
+                            //controller: controller.searchController,
+                            onChanged: (value) {
+                              controller.updateSearchQuery(
+                                  value); // Update the filtered list based on the input
+                            },
+                            // onSubmitted: (value) {
+                            //   controller.searchProducts(value);
+                            // },
+                          ),
                           SizedBox(height: 25.h),
                           Row(
                             children: [
@@ -237,38 +246,53 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                           SizedBox(height: 10.h),
                           SizedBox(
                             height: h / 2.3,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.productList.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(right: 20.w),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(DetailsScreen(
-                                          model:
-                                              controller.productList[index]));
-                                    },
-                                    child: CustomProductItem(
-                                      // productImage:
-                                      //     controller.productList[index].image ??
-                                      //         '',
-                                      // productName:
-                                      //     controller.productList[index].name ??
-                                      //         '',
-                                      // productPrice:
-                                      //     controller.productList[index].price ??
-                                      //         '',
-                                      // description: controller
-                                      //         .productList[index].description ??
-                                      //     '',
-                                      productModel:
-                                          controller.productList[index],
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
+                            child: controller.isLoading.value
+                                ? const Center(
+                                    child: CircularProgressIndicator(
+                                        color: kPrimaryColor),
+                                  )
+                                : controller.filteredProductList.isEmpty
+                                    ? Center(
+                                        child: Text(
+                                          'No products found.',
+                                          style: Styles.textStyle18,
+                                        ),
+                                      )
+                                    : ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: controller
+                                            .filteredProductList.length,
+                                        itemBuilder: (context, index) {
+                                          final product = controller
+                                              .filteredProductList[index];
+                                          return Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 20.w),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Get.to(DetailsScreen(
+                                                    model: product));
+                                              },
+                                              child: CustomProductItem(
+                                                // productImage:
+                                                //     controller.productList[index].image ??
+                                                //         '',
+                                                // productName:
+                                                //     controller.productList[index].name ??
+                                                //         '',
+                                                // productPrice:
+                                                //     controller.productList[index].price ??
+                                                //         '',
+                                                // description: controller
+                                                //         .productList[index].description ??
+                                                //     '',
+                                                //productModel: controller.productList[index],
+                                                productModel: product,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
                           ),
                         ],
                       ),

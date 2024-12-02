@@ -36,4 +36,12 @@ class FireStoreProduct {
         .snapshots()
         .map((snapshot) => snapshot.docs);
   }
+
+  Future<List<ProductModel>> searchProducts(String query) {
+    return _productCollectionRef.where('name', isEqualTo: query).get().then(
+        (value) => value.docs
+            .map((doc) =>
+                ProductModel.fromJson(doc.data() as Map<String, dynamic>))
+            .toList());
+  }
 }

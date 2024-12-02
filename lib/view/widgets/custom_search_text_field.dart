@@ -5,11 +5,18 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/assets-manager.dart';
 
 class CustomSearchTextField extends StatelessWidget {
-  const CustomSearchTextField({super.key});
+  void Function(String)? onChanged;
+  void Function(String)? onSubmitted;
+  //final TextEditingController _controller = TextEditingController();
+  CustomSearchTextField({super.key, this.onChanged, this.onSubmitted});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      //controller: _controller,
+      onChanged: onChanged,
+      onSubmitted: onSubmitted,
+      cursorColor: kPrimaryColor,
       decoration: InputDecoration(
         filled: true,
         fillColor: kLightGrey,
@@ -33,13 +40,18 @@ class CustomSearchTextField extends StatelessWidget {
               color: Colors.transparent), // Highlight border on focus
         ),
         border: InputBorder.none,
-        prefixIcon: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
-          child: SvgPicture.asset(
-            AssetsManager.searchIcon,
-            height: 22.h,
-            width: 22.w,
-            fit: BoxFit.fill,
+        prefixIcon: GestureDetector(
+          onTap: () {
+            //onSubmitted!();
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+            child: SvgPicture.asset(
+              AssetsManager.searchIcon,
+              height: 22.h,
+              width: 22.w,
+              fit: BoxFit.fill,
+            ),
           ),
         ),
       ),

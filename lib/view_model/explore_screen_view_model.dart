@@ -24,6 +24,9 @@ class ExploreScreenViewModel extends GetxController {
   List<ProductModel> get productList => _productList;
   List<ProductModel> get productListByCategory => _productListByCategory;
 
+  // List<ProductModel> _filteredProductList = [];
+  // List<ProductModel> get filteredProductList => _filteredProductList;
+
   String? name, description, price, size, productCategory;
 
   String? categoryName;
@@ -31,6 +34,8 @@ class ExploreScreenViewModel extends GetxController {
   Color? color;
 
   Uint8List? pickedImage;
+
+  //TextEditingController searchController = TextEditingController();
 
   // bool _httpRequestFailed = false;
   // bool get httpRequestFailed => _httpRequestFailed;
@@ -41,6 +46,8 @@ class ExploreScreenViewModel extends GetxController {
   // @override
   // void onInit() {
   //   super.onInit();
+  //   // Initialize the filtered list to show all products initially
+  //   _filteredProductList = List.from(_productList);
   // }
   //
   // @override
@@ -195,6 +202,39 @@ class ExploreScreenViewModel extends GetxController {
     });
   }
 
+  List<ProductModel> get filteredProductList {
+    if (_searchQuery.isEmpty) {
+      return _productList;
+    } else {
+      return _productList
+          .where(
+            (product) => product.name!
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()),
+          )
+          .toList();
+    }
+  }
+
+  String _searchQuery = '';
+
+  void updateSearchQuery(String query) {
+    _searchQuery = query;
+    update();
+  }
+  // void searchProducts(String query) {
+  //   if (query.isEmpty) {
+  //     _filteredProductList = List.from(_productList);
+  //   } else {
+  //     _filteredProductList = _productList
+  //         .where((product) =>
+  //             product.name?.toLowerCase().contains(query.toLowerCase()) ??
+  //             false)
+  //         .toList();
+  //   }
+  //   update();
+  // }
+
   // getBestSellingProducts() async {
   //   _isLoading.value = true;
   //   ExploreService().getBestSellingProducts().then((value) {
@@ -207,7 +247,7 @@ class ExploreScreenViewModel extends GetxController {
   //     update();
   //   });
   // }
-  void getBestSellingProducts() {
+  void getBestSellingProducts() async {
     _isLoading.value = true;
     ExploreService().getBestSellingProducts().listen((productDocs) {
       _productList.clear();
@@ -215,6 +255,7 @@ class ExploreScreenViewModel extends GetxController {
         productDocs.map(
             (doc) => ProductModel.fromJson(doc.data() as Map<String, dynamic>)),
       );
+      //_filteredProductList = List.from(_productList);
       _isLoading.value = false;
       update();
     });
