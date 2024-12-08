@@ -10,16 +10,15 @@
     <application
         android:label="shoply"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round">
-        <!-- Add the Firebase Messaging Service -->
-        <service
-            android:name="com.google.firebase.messaging.FirebaseMessagingService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+        android:icon="@mipmap/ic_launcher">
+<!--        &lt;!&ndash; Add the Firebase Messaging Service &ndash;&gt;-->
+<!--        <service-->
+<!--            android:name="com.google.firebase.messaging.FirebaseMessagingService"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
 
         <!-- Required for FCM -->
         <service

@@ -3,18 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/firebase_options.dart';
-import 'package:shoply/utils/fcm.dart';
+import 'package:shoply/core/service/push_notifications/fcm.dart';
 import 'package:shoply/view/control_view.dart';
 import 'package:shoply/view_model/cart_viewmodel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:shoply/utils/binding.dart' as binding;
+
+import 'core/service/push_notifications/local_notification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform, ////////
   );
-  await Fcm.fcmInit();
+  await Future.wait([
+    Fcm.fcmInit(), //2
+    LocalNotificationService.init(), //3
+  ]);
+  // Fcm.fcmInit(); //2
+  // await LocalNotificationService.init(); //3
   //Get.put(CartViewModel());
   await Supabase.initialize(
     url:
