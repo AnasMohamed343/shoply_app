@@ -131,7 +131,7 @@ class CartTabView extends StatelessWidget {
                                     buttonText: 'CHECKOUT',
                                     fixedSize: Size(146.w, 50.h),
                                     onPressed: () {
-                                      Get.to(const CheckoutView());
+                                      Get.to(() => CheckoutView());
                                     },
                                   )
                                 ],

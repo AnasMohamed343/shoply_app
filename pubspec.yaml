@@ -51,6 +51,10 @@ dependencies:
   device_info_plus: ^10.1.2
   supabase_flutter: ^1.0.0
   flutter_colorpicker: ^1.1.0
+  timelines: ^0.1.0
+  firebase_messaging: ^15.1.6
+  cloud_functions: ^5.2.0
+  flutter_local_notifications: ^18.0.1
 
 dev_dependencies:
   flutter_test:

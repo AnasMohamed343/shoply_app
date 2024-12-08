@@ -30,8 +30,11 @@ import 'package:shoply/view_model/control_view_model.dart';
 class ControlView extends GetWidget<AuthViewModel> {
   @override
   Widget build(BuildContext context) {
+    final controlViewModel = Get.put(ControlViewModel()); // Register controller
     return Obx(() {
-      return (Get.find<AuthViewModel>().user == '')
+      // return (Get.find<AuthViewModel>().user == '')
+      final authViewModel = Get.find<AuthViewModel>();
+      return authViewModel.user.isEmpty
           ? LoginScreen()
           : GetBuilder<ControlViewModel>(builder: (controller) {
               return Scaffold(
@@ -44,97 +47,97 @@ class ControlView extends GetWidget<AuthViewModel> {
 
   Widget bottomNavigationBar() {
     return GetBuilder<ControlViewModel>(
-        init: ControlViewModel(),
+        //init: ControlViewModel(),
         builder: (controller) {
-          return BottomNavigationBar(
-            backgroundColor: Colors.white,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            selectedLabelStyle:
-                Styles.textStyle14.copyWith(color: Colors.black),
-            selectedItemColor: Colors.black,
-            onTap: (index) {
-              controller.changeNavigatorIndex(index);
-            },
-            currentIndex: controller.navigatorIndex,
-            items: [
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  AssetsManager.exploreTabIcon,
-                  height: 18.h,
-                  width: 18.w,
+      return BottomNavigationBar(
+        backgroundColor: Colors.white,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        selectedLabelStyle: Styles.textStyle14.copyWith(color: Colors.black),
+        selectedItemColor: Colors.black,
+        // onTap: (index) {
+        //   controller.changeNavigatorIndex(index);
+        // },
+        currentIndex: controller.navigatorIndex,
+        onTap: controller.changeNavigatorIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetsManager.exploreTabIcon,
+              height: 18.h,
+              width: 18.w,
+            ),
+            label: '',
+            activeIcon: Column(
+              children: [
+                Text(
+                  'Explore', //'Explore \n      .'
+                  style: Styles.textStyle14.copyWith(color: Colors.black),
                 ),
-                label: '',
-                activeIcon: Column(
-                  children: [
-                    Text(
-                      'Explore', //'Explore \n      .'
-                      style: Styles.textStyle14.copyWith(color: Colors.black),
-                    ),
-                    SizedBox(height: 5.h),
-                    Container(
-                      height: 5.h,
-                      width: 5.w,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 5.h),
+                Container(
+                  height: 5.h,
+                  width: 5.w,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  AssetsManager.cartTabIcon,
-                  height: 18.h,
-                  width: 18.w,
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetsManager.cartTabIcon,
+              height: 18.h,
+              width: 18.w,
+            ),
+            label: '',
+            activeIcon: Column(
+              children: [
+                Text(
+                  'Cart', //'Cart \n    .'
+                  style: Styles.textStyle14.copyWith(color: Colors.black),
                 ),
-                label: '',
-                activeIcon: Column(
-                  children: [
-                    Text(
-                      'Cart', //'Cart \n    .'
-                      style: Styles.textStyle14.copyWith(color: Colors.black),
-                    ),
-                    SizedBox(height: 5.h),
-                    Container(
-                      height: 5.h,
-                      width: 5.w,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 5.h),
+                Container(
+                  height: 5.h,
+                  width: 5.w,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-              BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  AssetsManager.accountTabIcon,
-                  height: 18.h,
-                  width: 18.w,
+              ],
+            ),
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              AssetsManager.accountTabIcon,
+              height: 18.h,
+              width: 18.w,
+            ),
+            label: '',
+            activeIcon: Column(
+              children: [
+                Text(
+                  'Account', //'Account \n      .'
+                  style: Styles.textStyle14.copyWith(color: Colors.black),
                 ),
-                label: '',
-                activeIcon: Column(
-                  children: [
-                    Text(
-                      'Account', //'Account \n      .'
-                      style: Styles.textStyle14.copyWith(color: Colors.black),
-                    ),
-                    SizedBox(height: 5.h),
-                    Container(
-                      height: 5.h,
-                      width: 5.w,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 5.h),
+                Container(
+                  height: 5.h,
+                  width: 5.w,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.black,
+                  ),
                 ),
-              ),
-            ],
-          );
-        });
+              ],
+            ),
+          ),
+        ],
+      );
+    });
   }
 }
