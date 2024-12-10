@@ -1,52 +1,45 @@
-import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/service/supabase_upload_image.dart';
-import 'package:shoply/model/category_model.dart';
-import 'package:shoply/utils/image_functions.dart';
+import 'package:shoply/model/notification_model.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
 import 'package:shoply/view/widgets/custom_container_imagepicker.dart';
 import 'package:shoply/view/widgets/custom_imagepicker_button.dart';
 import 'package:shoply/view/widgets/custom_text_form_field.dart';
-import 'package:shoply/view_model/explore_screen_view_model.dart';
+import 'package:shoply/view_model/notification_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-class AddCategoryBottomSheet extends StatelessWidget {
-  String widgetTitle, buttonName;
-  CategoryModel? categoryModel;
-  AddCategoryBottomSheet(
-      {super.key,
-      required this.widgetTitle,
-      this.categoryModel,
-      required this.buttonName});
+class CustomAddNotificationBottomSheet extends StatelessWidget {
+  CustomAddNotificationBottomSheet({super.key});
+
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  //Uint8List? pickedImage;
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-      height: h / 1.6,
-      child: GetBuilder<ExploreScreenViewModel>(
-          init: ExploreScreenViewModel(),
+    const String addNotification = 'Add Notification';
+    return Form(
+      key: formKey,
+      child: GetBuilder<NotificationViewModel>(
+          init: NotificationViewModel(),
           builder: (controller) {
-            return Form(
-              key: formKey,
+            return Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.w,
+              ),
+              height: h / 1.36,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
                     textAlign: TextAlign.center,
-                    widgetTitle,
+                    addNotification,
                     style: Styles.textStyle18,
                   ),
                   SizedBox(height: 30.h),
-                  Text('Add Category Image',
+                  Text('$addNotification Image',
                       textAlign: TextAlign.start, style: Styles.textStyle16),
                   SizedBox(height: 15.h),
                   GestureDetector(
@@ -63,7 +56,7 @@ class AddCategoryBottomSheet extends StatelessWidget {
                                       height: h * 0.01,
                                     ),
                                     Text(
-                                      'Pick Category Image',
+                                      'Pick Notification Image',
                                       style: Styles.textStyle20,
                                     ),
                                     SizedBox(
@@ -101,31 +94,43 @@ class AddCategoryBottomSheet extends StatelessWidget {
                             });
                       },
                       child: CustomContainerImagePicker(
-                        height: h * 0.16,
+                        height: h * 0.18,
                         width: h * 0.17,
-                        shape: BoxShape.circle,
+                        shape: BoxShape.rectangle,
                         backgroundImage: controller.pickedImage != null
                             ? MemoryImage(controller.pickedImage!)
-                            : categoryModel?.image != null
-                                ? Image.network(categoryModel!.image!).image
-                                : null,
+                            : null,
                       )),
                   SizedBox(height: 25.h),
                   CustomTextFormField(
-                    fieldName: 'Add Category Name',
+                    fieldName: '$addNotification Title',
                     fieldNameColor: Colors.black,
-                    hintText: categoryModel?.name ?? 'category name',
+                    hintText: 'title',
                     hintTextColor: kGreyColor,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter category name';
+                        return 'Please enter notification title';
                       }
                       return null;
                     },
                     onSave: (value) {
-                      controller.categoryName = value?.isNotEmpty == true
-                          ? value
-                          : categoryModel?.name;
+                      controller.title = value;
+                    },
+                  ),
+                  SizedBox(height: 25.h),
+                  CustomTextFormField(
+                    fieldName: '$addNotification Body',
+                    fieldNameColor: Colors.black,
+                    hintText: 'body',
+                    hintTextColor: kGreyColor,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter notification body';
+                      }
+                      return null;
+                    },
+                    onSave: (value) {
+                      controller.body = value;
                     },
                   ),
                   SizedBox(height: 40.h),
@@ -134,42 +139,30 @@ class AddCategoryBottomSheet extends StatelessWidget {
                           color: kPrimaryColor,
                         )
                       : CustomButton(
-                          buttonText: buttonName,
+                          buttonText: addNotification,
                           fixedSize: Size(w, h / 15),
                           onPressed: () async {
-                            if (controller.pickedImage != null ||
-                                categoryModel?.image != null) {
-                              if (formKey.currentState!.validate()) {
-                                formKey.currentState!.save();
+                            if (formKey.currentState!.validate()) {
+                              formKey.currentState!.save();
 
-                                String? uploadedImageUrl;
-                                if (controller.pickedImage != null) {
-                                  uploadedImageUrl = await SupabaseUploadImage()
-                                      .uploadImageToStorage(
-                                          image: controller.pickedImage!,
-                                          filePathName: 'categories');
-                                }
-
-                                CategoryModel newCategory = CategoryModel(
-                                  name: controller.categoryName,
-                                  image: uploadedImageUrl ??
-                                      categoryModel?.image ??
-                                      '',
-                                  categoryId: categoryModel?.categoryId ??
-                                      UniqueKey().toString(),
-                                );
-
-                                if (categoryModel == null) {
-                                  controller.addCategory(
-                                      newCategory); // Add if no categoryModel
-                                } else {
-                                  controller.updateCategory(
-                                      newCategory); // Update if categoryModel exists
-                                }
-                                Get.back();
+                              String? uploadedImageUrl;
+                              if (controller.pickedImage != null) {
+                                uploadedImageUrl = await SupabaseUploadImage()
+                                    .uploadImageToStorage(
+                                        image: controller.pickedImage!,
+                                        filePathName: 'notifications');
                               }
-                            } else {
-                              Get.snackbar('Error', 'Please select image');
+
+                              controller.sendNotification(
+                                NotificationModel(
+                                    title: controller.title ?? '',
+                                    body: controller.body ?? '',
+                                    image: controller.pickedImage != null
+                                        ? uploadedImageUrl
+                                        : null,
+                                    topic: 'all'),
+                              );
+                              Get.back();
                             }
                           },
                         )

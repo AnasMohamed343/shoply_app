@@ -6,6 +6,7 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/main.dart';
 import 'package:shoply/view/admin/dashboard/dashboard_screen_view.dart';
+import 'package:shoply/view/notifications_view/notifications_view.dart';
 import 'package:shoply/view_model/auth_view_model.dart';
 
 class AccountTabView extends StatelessWidget {
@@ -106,8 +107,12 @@ class AccountTabView extends StatelessWidget {
                 _buildOptionRow(
                   context,
                   icon: Icons.payment,
-                  title: 'Payment Methods',
-                  onTap: () {},
+                  title: 'Notifications',
+                  onTap: () {
+                    Get.to(
+                      NotificationsView(),
+                    );
+                  },
                 ),
                 _buildDivider(),
                 _buildOptionRow(

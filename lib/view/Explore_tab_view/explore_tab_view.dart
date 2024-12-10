@@ -158,7 +158,10 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                   controller.resetPickedImage();
                                   showModalBottomSheet(
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20.r),
+                                          topRight: Radius.circular(20.r),
+                                        ),
                                       ),
                                       isScrollControlled: true,
                                       useSafeArea: true,
@@ -228,6 +231,12 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                 onPressed: () {
                                   controller.resetPickedImage();
                                   showModalBottomSheet(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20.r),
+                                          topRight: Radius.circular(20.r),
+                                        ),
+                                      ),
                                       isScrollControlled: true,
                                       useSafeArea: true,
                                       enableDrag: true,

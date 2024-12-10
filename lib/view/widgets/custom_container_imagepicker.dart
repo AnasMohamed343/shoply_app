@@ -29,7 +29,7 @@ class CustomContainerImagePicker extends StatelessWidget {
             ? kGreyColor.withOpacity(0.6)
             : Colors.transparent,
         image: DecorationImage(
-          image: backgroundImage ?? const AssetImage('assets/images/1.png'),
+          image: backgroundImage ?? Image.network('').image,
           fit: BoxFit.cover,
         ),
         shape: shape,

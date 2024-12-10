@@ -14,10 +14,22 @@ class Fcm {
 
   static Future<void> fcmInit() async {
     await requestPermission();
-    await getToken();
+    await getToken().then(
+      (token) {
+        sendTokenToServer(token ?? '');
+      },
+    );
+    messaging.onTokenRefresh.listen((token) {
+      sendTokenToServer(token);
+    });
     //await onForegroundMessage();
     handleForegroundMessage();
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    messaging.subscribeToTopic('all').then(
+      (state) {
+        print('subscribed');
+      },
+    );
   }
 
   static Future<void> requestPermission() async {
@@ -41,12 +53,15 @@ class Fcm {
   }
 
   static Future<String?> getToken() async {
-    String? token = await messaging.getToken(
-        //vapidKey: 'BMEqJ2tIb5y3Cq6YQXsWp2Vq2sV9V1e4kWuO6p2nU2kZ2bTtBbSsW9gFbI6wLbS2bB8dC3dD8dD8',
-        );
+    String? token = await messaging.getToken();
 
     print("Token: $token");
     return token;
+  }
+
+  static void sendTokenToServer(String token) {
+    // option 1 => send token to Api
+    // option 2 => send token to firebase
   }
 
   // static Future<void> onForegroundMessage() async {

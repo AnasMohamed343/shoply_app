@@ -40,8 +40,8 @@ class ExploreScreenViewModel extends GetxController {
   // bool _httpRequestFailed = false;
   // bool get httpRequestFailed => _httpRequestFailed;
   // set httpRequestFailed(bool value) => _httpRequestFailed = value;
-  final _httpRequestFailed = ValueNotifier<bool>(false);
-  ValueNotifier<bool> get httpRequestFailed => _httpRequestFailed;
+  // final _httpRequestFailed = ValueNotifier<bool>(false);
+  // ValueNotifier<bool> get httpRequestFailed => _httpRequestFailed;
 
   // @override
   // void onInit() {
