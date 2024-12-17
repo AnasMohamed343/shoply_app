@@ -19,7 +19,7 @@ class DashboardViewModel extends GetxController {
   getAllUsers() async {
     try {
       _isLoading.value = true;
-      _fireStoreUser.getAllUsers().then((value) {
+      await _fireStoreUser.getAllUsers().then((value) {
         for (int i = 0; i < value.length; i++) {
           _userList
               .add(UserModel.fromJson(value[i].data() as Map<String, dynamic>));
@@ -30,5 +30,10 @@ class DashboardViewModel extends GetxController {
     } catch (e) {
       print("Error fetching users: $e");
     }
+  }
+
+  Future<void> refreshUsers() async {
+    _userList.clear();
+    await getAllUsers();
   }
 }

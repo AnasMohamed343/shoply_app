@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/utils/enum.dart';
 import 'package:shoply/view/control_view.dart';
 
 class CheckOutViewModel extends GetxController {
@@ -10,25 +11,38 @@ class CheckOutViewModel extends GetxController {
   Pages get pages => _pages;
   Pages _pages = Pages.deliveryTime;
 
+  String? street1, street2, city, state, country;
+
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   void changeIndex(int index) {
-    _index = index;
-    if (_index == 1) {
+    if (index == 0 || index < 0) {
+      _pages = Pages.deliveryTime;
+      _index = index;
+    } else if (index == 1) {
       _pages = Pages.addAddress;
-    } else if (_index == 2) {
-      _pages = Pages.summary;
-    } else if (_index == 3) {
-      Get.to(() => ControlView());
+      _index = index;
+    } else if (index == 2) {
+      formState.currentState!.save();
+      if (formState.currentState!.validate()) {
+        _pages = Pages.summary;
+        _index = index;
+      }
+    } else if (index == 3) {
+      Get.to(ControlView());
+      _pages = Pages.deliveryTime;
+      _index = 0;
     }
     update();
   }
 
   Color getColor(int index) {
     if (index == _index) {
-      return inProgressColor;
-    } else if (index < _index) {
       return kPrimaryColor;
+    } else if (index < _index) {
+      return kLightGrey;
     } else {
-      return todoColor;
+      return kLightGrey;
     }
   }
 }

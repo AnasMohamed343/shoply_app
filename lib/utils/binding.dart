@@ -4,6 +4,7 @@ import 'package:shoply/view_model/cart_viewmodel.dart';
 import 'package:shoply/view_model/checkout_viewmodel.dart';
 import 'package:shoply/view_model/control_view_model.dart';
 import 'package:shoply/view_model/explore_screen_view_model.dart';
+import 'package:shoply/view_model/notification_viewmodel.dart';
 
 class Binding extends Bindings {
   //Binding = Dependency Injection
@@ -14,5 +15,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => ExploreScreenViewModel());
     Get.lazyPut(() => CartViewModel());
     Get.lazyPut(() => CheckOutViewModel());
+    Get.lazyPut(() => NotificationViewModel());
   }
 }

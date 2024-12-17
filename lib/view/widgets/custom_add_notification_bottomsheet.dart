@@ -153,15 +153,22 @@ class CustomAddNotificationBottomSheet extends StatelessWidget {
                                         filePathName: 'notifications');
                               }
 
-                              controller.sendNotification(
-                                NotificationModel(
-                                    title: controller.title ?? '',
-                                    body: controller.body ?? '',
-                                    image: controller.pickedImage != null
-                                        ? uploadedImageUrl
-                                        : null,
-                                    topic: 'all'),
+                              NotificationModel notificationModel;
+                              notificationModel = NotificationModel(
+                                title: controller.title ?? '',
+                                body: controller.body ?? '',
+                                image: controller.pickedImage != null
+                                    ? uploadedImageUrl
+                                    : null,
+                                topic: 'all',
+                                notificationId: UniqueKey().toString(),
+                                date: DateTime.now().toString(),
                               );
+                              controller
+                                  .sendNotification(notificationModel)
+                                  .then((value) {
+                                controller.addNotification(notificationModel);
+                              });
                               Get.back();
                             }
                           },

@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/main.dart';
+import 'package:shoply/view/Cart_tab_view/cart_tab_view.dart';
 import 'package:shoply/view/admin/dashboard/dashboard_screen_view.dart';
+import 'package:shoply/view/map_screen/map_screen.dart';
 import 'package:shoply/view/notifications_view/notifications_view.dart';
 import 'package:shoply/view_model/auth_view_model.dart';
 
@@ -89,11 +91,10 @@ class AccountTabView extends StatelessWidget {
                 _buildDivider(),
                 _buildOptionRow(
                   context,
-                  icon: Icons.shopping_cart,
-                  title: 'Shopping Cart',
+                  icon: Icons.location_on,
+                  title: 'Address',
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, '/cart'); // Replace with actual route
+                    Get.to(MapScreen());
                   },
                 ),
                 _buildDivider(),

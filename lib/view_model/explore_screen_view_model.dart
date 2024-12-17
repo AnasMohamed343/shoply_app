@@ -322,7 +322,7 @@ class ExploreScreenViewModel extends GetxController {
       );
     } catch (e) {
       _isLoading.value = false;
-      update();
+      //update();
       print(e.toString());
       Get.snackbar(
         'Error',
@@ -395,5 +395,12 @@ class ExploreScreenViewModel extends GetxController {
     pickedImage = null; // Reset picked image
     _pickerColor = Colors.white;
     update(); // Update UI to show the correct initial state
+  }
+
+  Future<void> refreshProductsAndCategories() async {
+    // _productList.clear();
+    // _categoryList.clear();
+    getBestSellingProducts();
+    await getCategory();
   }
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:shoply/core/common/widgets/custom_app_bar.dart';
+import 'package:shoply/view/notifications_view/custom_notification_list.dart';
 import 'package:shoply/view/widgets/custom_add_notification_bottomsheet.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
+import 'package:shoply/view_model/notification_viewmodel.dart';
 
 class NotificationsView extends StatelessWidget {
   const NotificationsView({super.key});
@@ -40,6 +43,11 @@ class NotificationsView extends StatelessWidget {
                     }),
               ],
             ),
+            GetBuilder<NotificationViewModel>(
+                init: NotificationViewModel(),
+                builder: (context) {
+                  return Expanded(child: CustomNotificationList());
+                }),
           ],
         ),
       ),

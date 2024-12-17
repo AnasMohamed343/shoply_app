@@ -18,6 +18,7 @@ final String kWomenCategory = 'Women';
 final String kGadgetsCategory = 'Gadgets';
 final String kGamingCategory = 'Gaming';
 final String kDevicesCategory = 'Devices';
+final String kNotificationCollection = 'Notifications';
 // final String kDeliveryTime = 'Delivery Time';
 // final String kAddAddress = 'Add Address';
 // final String kSummary = 'Summary';
@@ -25,9 +26,3 @@ final String kDevicesCategory = 'Devices';
 const kTileHeight = 50.0;
 const inProgressColor = Colors.black87;
 const todoColor = Color(0xffd1d2d7);
-
-enum Pages {
-  deliveryTime,
-  addAddress,
-  summary,
-}

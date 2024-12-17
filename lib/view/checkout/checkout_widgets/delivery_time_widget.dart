@@ -1,17 +1,92 @@
 import 'package:flutter/material.dart';
+import 'package:shoply/constants.dart';
+import 'package:shoply/core/Styles.dart';
+import 'package:shoply/utils/enum.dart';
 
-class DeliveryTime extends StatelessWidget {
-  const DeliveryTime({super.key});
+class DeliveryTime extends StatefulWidget {
+  @override
+  State<DeliveryTime> createState() => _DeliveryTimeState();
+}
+
+class _DeliveryTimeState extends State<DeliveryTime> {
+  Delivery delivery = Delivery.StandardDelivery;
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
+    return Expanded(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Choose delivery time",
-            style: TextStyle(fontSize: 30),
+          SizedBox(
+            height: h * 0.01,
+          ),
+          RadioListTile<Delivery>(
+            value: Delivery.StandardDelivery,
+            groupValue: delivery,
+            onChanged: (Delivery? value) {
+              setState(() {
+                delivery = value!;
+              });
+            },
+            title: Text(
+              'Standard Delivery',
+              style: Styles.textStyle24.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            subtitle: Text(
+              'Order will be delivered between 3 - 5 business days',
+              style: Styles.textStyle18,
+            ),
+            activeColor: kPrimaryColor,
+          ),
+          SizedBox(
+            height: h * 0.04,
+          ),
+          RadioListTile<Delivery>(
+            value: Delivery.NextDayDelivery,
+            groupValue: delivery,
+            onChanged: (Delivery? value) {
+              setState(() {
+                delivery = value!;
+              });
+            },
+            title: Text(
+              'Next Day Delivery',
+              style: Styles.textStyle24.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            subtitle: Text(
+              'Place your Order before 6pm and your items will be delivered the next day. ',
+              style: Styles.textStyle18,
+            ),
+            activeColor: kPrimaryColor,
+          ),
+          SizedBox(
+            height: h * 0.04,
+          ),
+          RadioListTile<Delivery>(
+            value: Delivery.NominatedDelivery,
+            groupValue: delivery,
+            onChanged: (Delivery? value) {
+              setState(() {
+                delivery = value!;
+              });
+            },
+            title: Text(
+              'Nominated Delivery',
+              style: Styles.textStyle24.copyWith(
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+            subtitle: Text(
+              'Pick a particular date from the calendar and order will be delivered on selected date.',
+              style: Styles.textStyle18,
+            ),
+            activeColor: kPrimaryColor,
           ),
         ],
       ),

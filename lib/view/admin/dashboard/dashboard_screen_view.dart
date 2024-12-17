@@ -20,14 +20,18 @@ class DashboardScreenView extends StatelessWidget {
           style: Styles.textStyle24,
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
-        child: RefreshIndicator(
-          onRefresh: () async {},
-          child: GetBuilder<ExploreScreenViewModel>(
-              init: ExploreScreenViewModel(),
-              builder: (controller) {
-                return ListView(
+      body: GetBuilder<ExploreScreenViewModel>(
+          init: ExploreScreenViewModel(),
+          builder: (controller) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 20.h),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  await Future.delayed(const Duration(seconds: 2));
+                  await Get.find<DashboardViewModel>().refreshUsers();
+                  await controller.refreshProductsAndCategories();
+                },
+                child: ListView(
                   //i used listview here because i want to make refresh indicator
                   children: [
                     DashboardItem(
@@ -58,10 +62,10 @@ class DashboardScreenView extends StatelessWidget {
                           );
                         }),
                   ],
-                );
-              }),
-        ),
-      ),
+                ),
+              ),
+            );
+          }),
     );
   }
 }
