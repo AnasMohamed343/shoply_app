@@ -10,4 +10,8 @@ abstract class AssetsManager {
   static const String exploreTabIcon = 'assets/icons/Icon_Explore.svg';
   static const String cartTabIcon = 'assets/icons/Icon_Cart.svg';
   static const String accountTabIcon = 'assets/icons/Icon_UserAccount.svg';
+  static const String paypalLogo = 'assets/images/PayPal_Logo.png';
+  static const String masterCardLogo = 'assets/images/Master_card_logo.jpg';
+  static const String creditCardLogo = 'assets/images/Credit_Card_logo.png';
+  static const String visaCardLogo = 'assets/images/Visa-Logo.png';
 }

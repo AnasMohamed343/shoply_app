@@ -9,6 +9,9 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   Color? fieldNameColor = kGreyColor,
       hintTextColor = kGreyColor.withOpacity(0.5);
+  final Widget? prefixIcon;
+  final InputBorder? border;
+  TextEditingController? controller = TextEditingController();
   CustomTextFormField({
     super.key,
     this.hintText,
@@ -17,6 +20,9 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.fieldNameColor,
     this.hintTextColor,
+    this.prefixIcon,
+    this.border,
+    this.controller,
   });
 
   @override
@@ -30,26 +36,33 @@ class CustomTextFormField extends StatelessWidget {
         ),
         SizedBox(height: 6.h),
         TextFormField(
+          controller: controller,
           cursorColor: kPrimaryColor,
           onSaved: onSave,
           validator: validator,
           decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: Styles.textStyle14.copyWith(color: hintTextColor),
+              hintStyle: Styles.textStyle14.copyWith(
+                  color: hintTextColor ?? kGreyColor.withOpacity(0.5)),
               fillColor: Colors.white,
               hoverColor: kPrimaryColor,
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: kLightGrey),
-              ),
-              focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: kPrimaryColor),
-              ),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(color: kLightGrey),
-              ),
-              disabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: kLightGrey),
-              )),
+              prefixIcon: prefixIcon,
+              enabledBorder: border ??
+                  UnderlineInputBorder(
+                    borderSide: BorderSide(color: kLightGrey),
+                  ),
+              focusedBorder: border ??
+                  const UnderlineInputBorder(
+                    borderSide: BorderSide(color: kPrimaryColor),
+                  ),
+              border: border ??
+                  UnderlineInputBorder(
+                    borderSide: BorderSide(color: kLightGrey),
+                  ),
+              disabledBorder: border ??
+                  UnderlineInputBorder(
+                    borderSide: BorderSide(color: kLightGrey),
+                  )),
         ),
       ],
     );

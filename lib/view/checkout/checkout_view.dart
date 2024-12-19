@@ -37,77 +37,74 @@ class CheckoutView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Add a SizedBox to constrain the height of the Timeline
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      height: h * 0.17,
-                      // child: Timeline.tileBuilder(
-                      //   padding: EdgeInsets.symmetric(horizontal: h * 0.09),
-                      //   theme: TimelineThemeData(
-                      //     direction: Axis.horizontal, // Set horizontal layout
-                      //     color: controller.getColor(controller.index),
-                      //     indicatorTheme: IndicatorThemeData(
-                      //         size: 20,
-                      //         color: controller.getColor(controller.index)),
-                      //     connectorTheme: ConnectorThemeData(
-                      //         thickness: 4.0, color: kLightGrey),
-                      //   ),
-                      //   builder: TimelineTileBuilder.fromStyle(
-                      //     contentsAlign: ContentsAlign.basic,
-                      //     contentsBuilder: (context, index) => Padding(
-                      //       padding: const EdgeInsets.all(15.0),
-                      //       child: Text(
-                      //         _processes[index],
-                      //         style:
-                      //             TextStyle(color: controller.getColor(index)),
-                      //       ),
-                      //     ),
-                      //     // oppositeContentsBuilder: (context, index) => Padding(
-                      //     //   padding: const EdgeInsets.all(20),
-                      //     //   child: Text(
-                      //     //     _content[index],
-                      //     //     style: TextStyle(
-                      //     //       fontWeight: FontWeight.bold,
-                      //     //       color: controller.getColor(index),
-                      //     //     ),
-                      //     //   ),
-                      //     // ),
-                      //     indicatorStyle: IndicatorStyle.dot,
-                      //     connectorStyle: ConnectorStyle.solidLine,
-                      //     itemCount: _processes.length,
-                      //   ),
-                      // ),
-                      child: Timeline.tileBuilder(
-                        scrollDirection: Axis.horizontal,
-                        //padding: EdgeInsets.symmetric(horizontal: h * 0.09),
-                        builder: TimelineTileBuilder.connected(
-                          connectorBuilder: (context, index, connectorType) {
-                            return SolidLineConnector(
-                              color: controller
-                                  .getColor(index), // Use dynamic index
-                              thickness: 4.0,
-                            );
-                          },
-                          indicatorBuilder: (context, index) {
-                            return DotIndicator(
-                              color: controller
-                                  .getColor(index), // Use dynamic index
-                              size: 20.0,
-                            );
-                          },
-                          itemExtentBuilder: (_, __) =>
-                              w * 0.3, // Set dynamic spacing
-                          contentsBuilder: (context, index) => Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(
-                              _processes[index],
-                              style: TextStyle(
-                                color: controller
-                                    .getColor(index), // Use dynamic index
-                              ),
-                            ),
+                  Container(
+                    alignment: Alignment.topCenter,
+                    height: h * 0.07,
+                    margin: EdgeInsets.only(bottom: h * 0.03),
+                    // child: Timeline.tileBuilder(
+                    //   padding: EdgeInsets.symmetric(horizontal: h * 0.09),
+                    //   theme: TimelineThemeData(
+                    //     direction: Axis.horizontal, // Set horizontal layout
+                    //     color: controller.getColor(controller.index),
+                    //     indicatorTheme: IndicatorThemeData(
+                    //         size: 20,
+                    //         color: controller.getColor(controller.index)),
+                    //     connectorTheme: ConnectorThemeData(
+                    //         thickness: 4.0, color: kLightGrey),
+                    //   ),
+                    //   builder: TimelineTileBuilder.fromStyle(
+                    //     contentsAlign: ContentsAlign.basic,
+                    //     contentsBuilder: (context, index) => Padding(
+                    //       padding: const EdgeInsets.all(15.0),
+                    //       child: Text(
+                    //         _processes[index],
+                    //         style:
+                    //             TextStyle(color: controller.getColor(index)),
+                    //       ),
+                    //     ),
+                    //     // oppositeContentsBuilder: (context, index) => Padding(
+                    //     //   padding: const EdgeInsets.all(20),
+                    //     //   child: Text(
+                    //     //     _content[index],
+                    //     //     style: TextStyle(
+                    //     //       fontWeight: FontWeight.bold,
+                    //     //       color: controller.getColor(index),
+                    //     //     ),
+                    //     //   ),
+                    //     // ),
+                    //     indicatorStyle: IndicatorStyle.dot,
+                    //     connectorStyle: ConnectorStyle.solidLine,
+                    //     itemCount: _processes.length,
+                    //   ),
+                    // ),
+                    child: Timeline.tileBuilder(
+                      scrollDirection: Axis.horizontal,
+                      //padding: EdgeInsets.symmetric(horizontal: h * 0.09),
+                      builder: TimelineTileBuilder.connected(
+                        connectorBuilder: (context, index, connectorType) {
+                          return SolidLineConnector(
+                            color:
+                                controller.getColor(index), // Use dynamic index
+                            thickness: 4.0,
+                          );
+                        },
+                        indicatorBuilder: (context, index) {
+                          return DotIndicator(
+                            color:
+                                controller.getColor(index), // Use dynamic index
+                            size: 20.0,
+                          );
+                        },
+                        itemExtentBuilder: (_, __) =>
+                            w * 0.3, // Set dynamic spacing
+                        contentsBuilder: (context, index) => Text(
+                          _processes[index],
+                          style: TextStyle(
+                            color:
+                                controller.getColor(index), // Use dynamic index
                           ),
-                          itemCount: _processes.length,
                         ),
+                        itemCount: _processes.length,
                       ),
                     ),
                   ),

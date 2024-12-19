@@ -114,7 +114,7 @@ class CartTabView extends StatelessWidget {
                                         height: 3.h,
                                       ),
                                       Text(
-                                        '\$ ${controller.getTotalPrice()}',
+                                        '\$ ${controller.getTotalPrice}',
                                         style: Styles.textStyle18
                                             .copyWith(color: kPrimaryColor),
                                       ),

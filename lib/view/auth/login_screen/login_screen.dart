@@ -75,10 +75,11 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                       ),
                       SizedBox(height: 30.h),
                       CustomTextFormField(
+                        controller: controller.email,
                         fieldName: 'Email',
                         hintText: 'Enter your email',
                         onSave: (value) {
-                          controller.email = value;
+                          controller.email.text = value ?? '';
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -88,10 +89,11 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                       ),
                       SizedBox(height: 32.h),
                       CustomTextFormField(
+                        controller: controller.password,
                         fieldName: 'Password',
                         hintText: 'Enter your password',
                         onSave: (value) {
-                          controller.password = value;
+                          controller.password.text = value ?? '';
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {

@@ -16,13 +16,13 @@ class CartViewModel extends GetxController {
     getAllProduct();
   }
 
-  String getTotalPrice() {
+  String get getTotalPrice {
     double total = 0.0;
     _cartProductList?.forEach((element) {
       total += element.price?.toDouble() *
           element
               .quantity!; // or //total += (double.parse(element.price!) * element.quantity!);
-      update();
+      // update(); // it's made this error (setState() or markNeedsBuild() called during build), when i use update() here.
     });
     return total.toStringAsFixed(2);
   }

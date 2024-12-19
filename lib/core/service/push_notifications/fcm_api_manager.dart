@@ -2,7 +2,7 @@
 //
 // class FcmApiManager {
 //   final String serverKey =
-//       'AIzaSyATOE_xJpGFAPI5RrOlOX0mHsTaaLuGuS0'; // Replace with your FCM server key.
+//       ''; // Replace with your FCM server key.
 //   final String endpoint =
 //       'https://fcm.googleapis.com/v1/projects/shoply-e-commerce/messages:send';
 //

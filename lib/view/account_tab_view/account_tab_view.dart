@@ -6,6 +6,7 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/main.dart';
 import 'package:shoply/view/Cart_tab_view/cart_tab_view.dart';
+import 'package:shoply/view/address/address_screen.dart';
 import 'package:shoply/view/admin/dashboard/dashboard_screen_view.dart';
 import 'package:shoply/view/map_screen/map_screen.dart';
 import 'package:shoply/view/notifications_view/notifications_view.dart';
@@ -94,7 +95,8 @@ class AccountTabView extends StatelessWidget {
                   icon: Icons.location_on,
                   title: 'Address',
                   onTap: () {
-                    Get.to(MapScreen());
+                    //Get.to(MapScreen());
+                    Get.to(AddressScreen());
                   },
                 ),
                 _buildDivider(),

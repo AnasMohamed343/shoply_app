@@ -139,13 +139,20 @@ import 'package:shoply/core/service/firestore_user.dart';
 import 'package:shoply/model/user_model.dart';
 import 'package:shoply/view/Explore_tab_view/explore_tab_view.dart';
 import 'package:shoply/view/auth/login_screen/login_screen.dart';
+import 'package:shoply/view/control_view.dart';
 import 'package:shoply/view/home_Screen.dart';
 
 class AuthViewModel extends GetxController {
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  String? email, password, name;
-  Rx<User?> _user = Rx<User?>(null);
+  static AuthViewModel get instance => Get.find();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // get authenticated user data
+  User? get authUser => _auth.currentUser;
+  // String? email, password, name;
+  final email = TextEditingController();
+  final password = TextEditingController();
+  String? name;
+  final Rx<User?> _user = Rx<User?>(null);
 
   String get user => _user.value?.email ?? '';
 
@@ -226,10 +233,11 @@ class AuthViewModel extends GetxController {
   void signInWithEmailAndPassword() async {
     try {
       await _auth.signInWithEmailAndPassword(
-        email: email ?? '',
-        password: password ?? '',
+        email: email.text.trim(),
+        password: password.text.trim(),
       );
-      Get.offAll(ExploreTabView());
+      //Get.offAll(ExploreTabView());
+      Get.offAll(ControlView());
     } on FirebaseAuthException catch (e) {
       print('signIn error: $e'); // Print detailed error information
       if ((e.code == 'user-not-found') || (e.code == 'wrong-password')) {
@@ -266,8 +274,8 @@ class AuthViewModel extends GetxController {
       if (email != null && password != null) {
         UserCredential userCredential =
             await _auth.createUserWithEmailAndPassword(
-          email: email!,
-          password: password!,
+          email: email.text.trim(),
+          password: password.text.trim(),
         );
         saveUser(userCredential);
         Get.offAll(LoginScreen());

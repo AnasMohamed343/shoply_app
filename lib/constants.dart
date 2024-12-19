@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color kPrimaryColor = Color(0xff00C569);
+const Color kPrimaryDarkColor = Color(0xff009D54);
 const Color kGreyColor = Color(0xff929292);
 Color kLightGrey = Colors.grey.shade200;
 final String kProductCollection = 'Products';
@@ -19,6 +20,7 @@ final String kGadgetsCategory = 'Gadgets';
 final String kGamingCategory = 'Gaming';
 final String kDevicesCategory = 'Devices';
 final String kNotificationCollection = 'Notifications';
+final String kUserAddresses = 'Addresses';
 // final String kDeliveryTime = 'Delivery Time';
 // final String kAddAddress = 'Add Address';
 // final String kSummary = 'Summary';
