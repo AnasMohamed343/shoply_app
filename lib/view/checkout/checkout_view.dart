@@ -4,7 +4,10 @@ import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
 import 'package:shoply/utils/enum.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
+import 'package:shoply/view_model/cart_viewmodel.dart';
 import 'package:shoply/view_model/checkout_viewmodel.dart';
+import 'package:shoply/view_model/delivery_viewmodel.dart';
+import 'package:shoply/view_model/order_viewmodel.dart';
 import 'package:timelines/timelines.dart';
 
 import 'checkout_widgets/add_address_widget.dart';
@@ -14,6 +17,11 @@ import 'checkout_widgets/summary_widget.dart';
 class CheckoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cartController = CartViewModel.instance;
+    final totalPrice = cartController.getTotalPrice;
+    final deliveryController = DeliveryViewModel.instance;
+    final selectedDelivery = deliveryController.selectedDelivery.value;
+    final orderController = Get.put(OrderViewModel());
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
     return GetBuilder<CheckOutViewModel>(
@@ -96,7 +104,7 @@ class CheckoutView extends StatelessWidget {
                           );
                         },
                         itemExtentBuilder: (_, __) =>
-                            w * 0.3, // Set dynamic spacing
+                            w * 0.5, // Set dynamic spacing
                         contentsBuilder: (context, index) => Text(
                           _processes[index],
                           style: TextStyle(
@@ -120,9 +128,9 @@ class CheckoutView extends StatelessWidget {
                   // ),
                   controller.pages == Pages.deliveryTime
                       ? DeliveryTime()
-                      : controller.pages == Pages.addAddress
-                          ? AddAddress()
-                          : Summary(),
+                      // : controller.pages == Pages.addAddress
+                      //     ? AddAddress()
+                      : Summary(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Row(
@@ -140,13 +148,25 @@ class CheckoutView extends StatelessWidget {
                                 foregroundColor: kPrimaryColor,
                                 backgroundColor: Colors.white,
                               ),
-                        CustomButton(
-                          fixedSize: Size(w * 0.45, h * 0.06),
-                          buttonText: 'NEXT',
-                          onPressed: () {
-                            controller.changeIndex(controller.index + 1);
-                          },
-                        ),
+                        controller.index == 1
+                            ? CustomButton(
+                                fixedSize: Size(w * 0.45, h * 0.06),
+                                buttonText: 'Checkout',
+                                onPressed: double.parse(totalPrice) > 0
+                                    ? () => orderController.processOrder(
+                                        double.parse(totalPrice),
+                                        selectedDelivery)
+                                    : () => Get.snackbar('Empty Cart',
+                                        'Please add items in the cart in order to proceed',
+                                        snackPosition: SnackPosition.BOTTOM),
+                              )
+                            : CustomButton(
+                                fixedSize: Size(w * 0.45, h * 0.06),
+                                buttonText: 'NEXT',
+                                onPressed: () {
+                                  controller.changeIndex(controller.index + 1);
+                                },
+                              ),
                       ],
                     ),
                   )
@@ -160,7 +180,7 @@ class CheckoutView extends StatelessWidget {
 
 final _processes = [
   'Delivery',
-  'Address',
+  //'Address',
   'Summer',
 ];
 //

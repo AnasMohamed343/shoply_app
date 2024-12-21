@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
+import 'package:shoply/core/assets-manager.dart';
 import 'package:shoply/view/checkout/checkout_view.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
 import 'package:shoply/view/widgets/custom_cart_item.dart';
@@ -39,11 +40,26 @@ class CartTabView extends StatelessWidget {
                   ),
                 )
               : controller.cartProductList?.isEmpty == true
-                  ? const Scaffold(
+                  ? Scaffold(
                       backgroundColor: Colors.white,
                       body: Center(
-                          child: Text(
-                        "Cart is empty",
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: h * 0.25,
+                            width: w * 0.6,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: const AssetImage(AssetsManager.emptyCart),
+                            )),
+                          ),
+                          Text(
+                            "Your Cart is empty",
+                            style: Styles.textStyle20,
+                          ),
+                        ],
                       )),
                     )
                   : Scaffold(

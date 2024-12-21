@@ -58,4 +58,15 @@ class CartDatabaseHelper {
     return await dbClient?.delete(kTableCartProduct,
         where: '$kColumnProductId = ?', whereArgs: [productId]);
   }
+
+  void clearCart() async {
+    if (_database == null) {
+      throw Exception("Database is not initialized");
+    }
+
+    final dbClient = _database;
+
+    // Delete all records in the cart table
+    await dbClient?.delete(kTableCartProduct);
+  }
 }

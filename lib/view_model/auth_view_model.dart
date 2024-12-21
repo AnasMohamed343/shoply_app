@@ -147,7 +147,7 @@ class AuthViewModel extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // get authenticated user data
-  User? get authUser => _auth.currentUser;
+  User get authUser => _auth.currentUser!;
   // String? email, password, name;
   final email = TextEditingController();
   final password = TextEditingController();

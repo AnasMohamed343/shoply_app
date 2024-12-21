@@ -111,13 +111,6 @@ import 'package:shoply/utils/image_functions.dart';
 //     update();
 //   }
 // }
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shoply/core/service/firestore_notification.dart';
-import 'package:shoply/core/service/push_notifications/fcm_api_manager.dart';
-import 'package:shoply/model/notification_model.dart';
-import 'package:shoply/utils/image_functions.dart';
 
 class NotificationViewModel extends GetxController {
   ValueNotifier<bool> _isLoading = ValueNotifier(false);

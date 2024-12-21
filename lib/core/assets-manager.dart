@@ -14,4 +14,9 @@ abstract class AssetsManager {
   static const String masterCardLogo = 'assets/images/Master_card_logo.jpg';
   static const String creditCardLogo = 'assets/images/Credit_Card_logo.png';
   static const String visaCardLogo = 'assets/images/Visa-Logo.png';
+  static const String noDataFoundAnimation =
+      'assets/animations/noDataFound_animation.json';
+  static const String loadingAnimation =
+      'assets/animations/loading_animation.json';
+  static const String emptyCart = 'assets/images/cartEmpty.webp';
 }

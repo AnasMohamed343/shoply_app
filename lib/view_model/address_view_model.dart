@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/core/assets-manager.dart';
+import 'package:shoply/core/common/custom_full_screen_loader.dart';
 import 'package:shoply/core/common/widgets/custom_section_heading.dart';
 import 'package:shoply/core/service/firestore_address.dart';
 import 'package:shoply/model/address_model.dart';
+import 'package:shoply/utils/helper_functions.dart';
+import 'package:shoply/view/address/add_new_address_screen.dart';
+import 'package:shoply/view/address/widgets/custom_address_item.dart';
+import 'package:shoply/view/widgets/custom_button.dart';
 
 class AddressViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   ValueNotifier<bool> _loading = ValueNotifier(false);
 
-  static AddressViewModel get instance => Get.find();
+  static AddressViewModel get instance => Get.put(AddressViewModel());
 
   final name = TextEditingController();
   final phoneNumber = TextEditingController();
@@ -22,6 +28,8 @@ class AddressViewModel extends GetxController {
 
   RxBool refreshData = true.obs;
   final Rx<AddressModel> selectedAddress = AddressModel.empty().obs;
+  String get selectedAddressToString =>
+      '${selectedAddress.value.street}, ${selectedAddress.value.city}, ${selectedAddress.value.state}, ${selectedAddress.value.country}';
 
   // fetch all user specific addresses
   Future<List<AddressModel>> getAllUserAddresses() async {
@@ -42,19 +50,21 @@ class AddressViewModel extends GetxController {
 
   Future selectAddress(AddressModel newSelectedAddress) async {
     try {
-      Get.defaultDialog(
-        title: '',
-        onWillPop: () async {
-          return false;
-        },
-        barrierDismissible: false,
-        backgroundColor: Colors.transparent,
-        content: const Center(
-          child: CircularProgressIndicator(
-            color: kPrimaryColor,
-          ),
-        ),
-      );
+      // Get.defaultDialog(
+      //   title: '',
+      //   onWillPop: () async {
+      //     return false;
+      //   },
+      //   barrierDismissible: false,
+      //   backgroundColor: Colors.transparent,
+      //   content: const Center(
+      //     child: CircularProgressIndicator(
+      //       color: kPrimaryColor,
+      //     ),
+      //   ),
+      // );
+      CustomFullScreenLoader.openLoadingDialog(
+          '', AssetsManager.loadingAnimation);
 
       //clear the selected field
       if (selectedAddress.value.id.isNotEmpty) {
@@ -70,7 +80,8 @@ class AddressViewModel extends GetxController {
       await FireStoreAddress().updateSelectedField(newSelectedAddress.id, true);
 
       // close the default dialog after the address is selected
-      Get.back();
+      //Get.back();
+      CustomFullScreenLoader.stopLoadingDialog();
     } catch (e) {
       Get.snackbar(
         'Error in selecting address',
@@ -82,13 +93,16 @@ class AddressViewModel extends GetxController {
   Future addNewAddress() async {
     try {
       //start loading
-      _loading.value = true;
+      //_loading.value = true;
+      CustomFullScreenLoader.openLoadingDialog(
+          '', AssetsManager.loadingAnimation);
 
       //check internet connectivity
 
       //form validation
       if (!addressFormKey.currentState!.validate()) {
-        _loading.value = false;
+        //_loading.value = false;
+        CustomFullScreenLoader.stopLoadingDialog();
         return;
       }
 
@@ -111,7 +125,8 @@ class AddressViewModel extends GetxController {
           address); //to select the new address automatically when it is added
 
       //remove loader
-      _loading.value = false;
+      //_loading.value = false;
+      CustomFullScreenLoader.stopLoadingDialog();
 
       //show success message
       Get.snackbar(
@@ -146,28 +161,52 @@ class AddressViewModel extends GetxController {
     addressFormKey.currentState?.reset();
   }
 
-  // Future<dynamic> selectNewAddressPopUp(BuildContext context) {
-  //   return showModalBottomSheet(
-  //     isScrollControlled: true,
-  //     showDragHandle: true,
-  //     context: context,
-  //     builder: (context) => Container(
-  //       padding: EdgeInsets.all(15.h),
-  //       child: Column(
-  //         children: [
-  //           CustomSectionHeading(title: 'Select Address'),
-  //           FutureBuilder(future: getAllUserAddresses(),
-  //               builder: (context, snapshot) {
-  //                 return ListView.builder(
-  //                   itemCount: snapshot.data!.length,
-  //                   shrinkWrap: true,
-  //                     itemBuilder: (context, index) {
-  //
-  //                 });
-  //               },),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+  Future<dynamic> selectNewAddressPopUp(BuildContext context) {
+    return showModalBottomSheet(
+      useSafeArea: true,
+      isScrollControlled: true,
+      showDragHandle: true,
+      context: context,
+      builder: (context) => Container(
+        padding: EdgeInsets.all(15.h),
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomSectionHeading(title: 'Select Address'),
+              FutureBuilder(
+                future: getAllUserAddresses(),
+                builder: (context, snapshot) {
+                  // helper function: to handle loader, error and nothing found
+                  final response =
+                      HelperFunctions.checkMultiRecordState(snapshot: snapshot);
+                  if (response != null) return response;
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => CustomAddressItem(
+                          address: snapshot.data![index],
+                          onTap: () async {
+                            await selectAddress(snapshot.data![index]);
+                            Get.back();
+                          }));
+                },
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  fixedSize: Size(double.infinity, 40.h),
+                  buttonText: 'Add new address',
+                  onPressed: () => Get.to(const AddNewAddressScreen()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

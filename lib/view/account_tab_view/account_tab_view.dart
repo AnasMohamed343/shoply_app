@@ -10,6 +10,7 @@ import 'package:shoply/view/address/address_screen.dart';
 import 'package:shoply/view/admin/dashboard/dashboard_screen_view.dart';
 import 'package:shoply/view/map_screen/map_screen.dart';
 import 'package:shoply/view/notifications_view/notifications_view.dart';
+import 'package:shoply/view/order/order_screen.dart';
 import 'package:shoply/view_model/auth_view_model.dart';
 
 class AccountTabView extends StatelessWidget {
@@ -104,7 +105,9 @@ class AccountTabView extends StatelessWidget {
                   context,
                   icon: Icons.receipt, // Replace with your asset
                   title: 'Orders',
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(OrderScreen());
+                  },
                 ),
                 _buildDivider(),
                 _buildOptionRow(

@@ -9,3 +9,23 @@ enum Delivery {
   NextDayDelivery,
   NominatedDelivery,
 }
+
+enum OrderStatus {
+  pending,
+  processing,
+  shipped,
+  delivered,
+  cancelled,
+}
+
+enum PaymentMethods {
+  paypal,
+  googlePay,
+  applePay,
+  visa,
+  masterCard,
+  creditCard,
+  payStack,
+  razorpay,
+  paytm
+}

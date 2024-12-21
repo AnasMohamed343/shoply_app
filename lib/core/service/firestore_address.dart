@@ -15,7 +15,7 @@ class FireStoreAddress {
       final result = await _db
           .collection(kUserCollection)
           .doc(userId)
-          .collection(kUserAddresses)
+          .collection(kAddressesCollection)
           .get();
       //return result.docs.map((e) => AddressModel.fromJson(e.data())).toList();
       return result.docs
@@ -34,7 +34,7 @@ class FireStoreAddress {
       await _db
           .collection(kUserCollection)
           .doc(userId)
-          .collection(kUserAddresses)
+          .collection(kAddressesCollection)
           .doc(addressId)
           .update({'selectedAddress': selected});
     } catch (e) {
@@ -48,7 +48,7 @@ class FireStoreAddress {
       final currentAddress = await _db
           .collection(kUserCollection)
           .doc(userId)
-          .collection(kUserAddresses)
+          .collection(kAddressesCollection)
           .add(address.toJson());
       return currentAddress.id;
     } catch (e) {

@@ -29,7 +29,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     borderSide: BorderSide(color: kGreyColor.withOpacity(0.5)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  prefixIcon: Icon(Icons.person),
+                  prefixIcon: const Icon(Icons.person),
                   fieldName: 'Name',
                   hintText: 'Name',
                 ),
@@ -44,7 +44,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     borderSide: BorderSide(color: kGreyColor.withOpacity(0.5)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  prefixIcon: Icon(Icons.mobile_screen_share),
+                  prefixIcon: const Icon(Icons.mobile_screen_share),
                   fieldName: 'Phone Number',
                   hintText: 'Phone Number',
                 ),
@@ -58,7 +58,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     borderSide: BorderSide(color: kGreyColor.withOpacity(0.5)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  prefixIcon: Icon(Icons.stacked_line_chart_outlined),
+                  prefixIcon: const Icon(Icons.stacked_line_chart_outlined),
                   fieldName: 'Street',
                   hintText: 'Street',
                 ),
@@ -72,7 +72,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     borderSide: BorderSide(color: kGreyColor.withOpacity(0.5)),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  prefixIcon: Icon(Icons.location_city),
+                  prefixIcon: const Icon(Icons.location_city),
                   fieldName: 'City',
                   hintText: 'City',
                 ),
@@ -91,7 +91,7 @@ class AddNewAddressScreen extends StatelessWidget {
                               BorderSide(color: kGreyColor.withOpacity(0.5)),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        prefixIcon: Icon(Icons.airplanemode_active),
+                        prefixIcon: const Icon(Icons.airplanemode_active),
                         fieldName: 'State',
                         hintText: 'State',
                       ),
@@ -109,7 +109,7 @@ class AddNewAddressScreen extends StatelessWidget {
                               BorderSide(color: kGreyColor.withOpacity(0.5)),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        prefixIcon: Icon(Icons.location_city),
+                        prefixIcon: const Icon(Icons.location_city),
                         fieldName: 'Country',
                         hintText: 'Country',
                       ),
@@ -119,18 +119,18 @@ class AddNewAddressScreen extends StatelessWidget {
                 SizedBox(
                   height: h * 0.03,
                 ),
-                controller.loading.value
-                    ? const CircularProgressIndicator(
-                        color: kPrimaryColor,
-                      )
-                    : CustomButton(
-                        borderRadius: 10,
-                        fixedSize: Size(double.infinity, h * 0.06),
-                        buttonText: 'Save',
-                        onPressed: () {
-                          controller.addNewAddress();
-                        },
-                      ),
+                // controller.loading.value
+                //     ? const CircularProgressIndicator(
+                //         color: kPrimaryColor,
+                //       ) :
+                CustomButton(
+                  borderRadius: 10,
+                  fixedSize: Size(double.infinity, h * 0.06),
+                  buttonText: 'Save',
+                  onPressed: () {
+                    controller.addNewAddress();
+                  },
+                ),
               ],
             ),
           ),

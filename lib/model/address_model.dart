@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddressModel {
   String id;
-  String? phoneNumber, street, city, state, country, name;
+  String? phoneNumber, street, city, state, name;
+  String country;
   final DateTime? dateTime;
   bool selectedAddress;
 
@@ -12,7 +13,7 @@ class AddressModel {
       this.street,
       this.city,
       this.state,
-      this.country,
+      required this.country,
       this.name,
       this.dateTime,
       this.selectedAddress = true});

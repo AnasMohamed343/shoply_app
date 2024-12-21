@@ -22,8 +22,8 @@ class Summary extends StatelessWidget {
     return GetBuilder<CartViewModel>(
         //init: Get.put(CartViewModel()),
         builder: (controller) {
-      return SingleChildScrollView(
-        child: Expanded(
+      return Expanded(
+        child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,9 +90,8 @@ class Summary extends StatelessWidget {
                 ),
               ),
               Container(
-                height: h * 0.41,
                 padding: EdgeInsets.all(10.h),
-                margin: EdgeInsets.only(bottom: 2.h),
+                margin: EdgeInsets.symmetric(vertical: 2.h, horizontal: 5.w),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   border:
@@ -126,14 +125,14 @@ class Summary extends StatelessWidget {
                     ),
                     CustomBillingPaymentSection(),
                     SizedBox(
-                      height: h * 0.02,
-                    ),
-                    CustomBillingAddressSection(),
-                    SizedBox(
                       height: h * 0.01,
                     ),
+                    CustomBillingAddressSection(),
                   ],
                 ),
+              ),
+              SizedBox(
+                height: h * 0.02,
               ),
             ],
           ),

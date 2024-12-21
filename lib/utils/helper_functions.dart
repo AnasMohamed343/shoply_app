@@ -31,4 +31,8 @@ class HelperFunctions {
 
     return null;
   }
+
+  static getFormattedDate(DateTime orderDate) {
+    return '${orderDate.day}/${orderDate.month}/${orderDate.year}';
+  }
 }

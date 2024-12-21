@@ -14,6 +14,7 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(AddressViewModel());
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(title: 'Addresses'),
       body: SingleChildScrollView(
         child: Obx(

@@ -4,6 +4,8 @@ import 'package:shoply/core/service/database/cart_database_helper.dart';
 import 'package:shoply/model/cart_product_model.dart';
 
 class CartViewModel extends GetxController {
+  static CartViewModel get instance => Get.put(CartViewModel());
+
   ValueNotifier<bool> get loading => _loading;
   ValueNotifier<bool> _loading = ValueNotifier(false);
 
@@ -75,6 +77,13 @@ class CartViewModel extends GetxController {
       }
     }
     return false;
+  }
+
+  void clearCart() {
+    _cartProductList?.clear();
+    //clear from database
+    dbHelper.clearCart();
+    update();
   }
 }
 
