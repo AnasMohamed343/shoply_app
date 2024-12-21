@@ -19,8 +19,8 @@ class CheckoutView extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartController = CartViewModel.instance;
     final totalPrice = cartController.getTotalPrice;
-    final deliveryController = DeliveryViewModel.instance;
-    final selectedDelivery = deliveryController.selectedDelivery.value;
+    // final deliveryController = DeliveryViewModel.instance;
+    // final selectedDelivery = deliveryController.selectedDelivery.value;
     final orderController = Get.put(OrderViewModel());
     final double h = MediaQuery.of(context).size.height;
     final double w = MediaQuery.of(context).size.width;
@@ -153,9 +153,8 @@ class CheckoutView extends StatelessWidget {
                                 fixedSize: Size(w * 0.45, h * 0.06),
                                 buttonText: 'Checkout',
                                 onPressed: double.parse(totalPrice) > 0
-                                    ? () => orderController.processOrder(
-                                        double.parse(totalPrice),
-                                        selectedDelivery)
+                                    ? () => orderController
+                                        .processOrder(double.parse(totalPrice))
                                     : () => Get.snackbar('Empty Cart',
                                         'Please add items in the cart in order to proceed',
                                         snackPosition: SnackPosition.BOTTOM),

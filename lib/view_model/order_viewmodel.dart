@@ -42,7 +42,7 @@ class OrderViewModel extends GetxController {
   }
 
   // add methods for order processing
-  void processOrder(double totalPrice, Delivery selectedDelivery) async {
+  void processOrder(double totalPrice) async {
     try {
       // start loader
       //_loading.value = true;
@@ -53,7 +53,9 @@ class OrderViewModel extends GetxController {
       final userId = AuthViewModel.instance.authUser.uid;
       if (userId.isEmpty) return;
 
-      // calculate the selected delivery time
+      // Fetch the selected delivery option and calculate delivery time
+      final deliveryController = DeliveryViewModel.instance;
+      final selectedDelivery = deliveryController.selectedDelivery.value;
       final orderDate = DateTime.now();
       final deliveryTime =
           deliveryController.calculateDeliveryTime(orderDate, selectedDelivery);

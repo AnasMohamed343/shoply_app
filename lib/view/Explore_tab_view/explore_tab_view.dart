@@ -91,6 +91,7 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/model/category_model.dart';
 import 'package:shoply/view/details_screen.dart';
+import 'package:shoply/view/notifications_view/notifications_view.dart';
 import 'package:shoply/view/products_by_category/product_list_by_category.dart';
 import 'package:shoply/view/widgets/add_category_bottom_sheet.dart';
 import 'package:shoply/view/widgets/add_product_bottom_sheet.dart';
@@ -102,6 +103,7 @@ import 'package:shoply/view/widgets/custom_product_item.dart';
 import 'package:shoply/view/widgets/custom_search_text_field.dart';
 import 'package:shoply/view/widgets/custom_text_form_field.dart';
 import 'package:shoply/view/widgets/show_custom_popup_menu.dart';
+import 'package:shoply/view_model/auth_view_model.dart';
 import 'package:shoply/view_model/explore_screen_view_model.dart';
 
 class ExploreTabView extends GetView<ExploreScreenViewModel> {
@@ -112,6 +114,7 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
 
+    final authController = AuthViewModel.instance;
     return GetBuilder<ExploreScreenViewModel>(
         init: ExploreScreenViewModel(),
         builder: (controller) {
@@ -123,188 +126,238 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
               : Scaffold(
                   backgroundColor: Colors.white,
                   body: SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 60.h,
-                        left: 16.w,
-                        right: 10.w,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CustomSearchTextField(
-                            //controller: controller.searchController,
-                            onChanged: (value) {
-                              controller.updateSearchQuery(
-                                  value); // Update the filtered list based on the input
-                            },
-                            // onSubmitted: (value) {
-                            //   controller.searchProducts(value);
-                            // },
-                          ),
-                          SizedBox(height: 25.h),
-                          Row(
-                            children: [
-                              Text(
-                                textAlign: TextAlign.start,
-                                'Categories',
-                                style: Styles.textStyle18,
-                              ),
-                              const Spacer(),
-                              CustomButton(
-                                fixedSize: Size(w * 0.2, 25.h),
-                                buttonText: 'ADD',
-                                onPressed: () {
-                                  controller.resetPickedImage();
-                                  showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20.r),
-                                          topRight: Radius.circular(20.r),
-                                        ),
-                                      ),
-                                      isScrollControlled: true,
-                                      useSafeArea: true,
-                                      enableDrag: true,
-                                      showDragHandle: true,
-                                      isDismissible: true,
-                                      context: context,
-                                      builder: (context) =>
-                                          AddCategoryBottomSheet(
-                                            widgetTitle: 'Create New Category',
-                                            buttonName: 'ADD',
-                                          ));
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 15.h),
-                          SizedBox(
-                            height: h * 0.14,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: controller.categoryList.length,
-                              itemBuilder: (context, index) {
-                                final CategoryModel category =
-                                    controller.categoryList[index];
-                                // Create a unique key for each item
-                                final GlobalKey itemKey = GlobalKey();
-                                return Padding(
-                                  padding: EdgeInsets.only(right: 10.w),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => ProductListByCategory(
-                                            category: controller
-                                                    .categoryList[index].name ??
-                                                '',
-                                          ));
-                                    },
-                                    onLongPress: () {
-                                      showCustomPopupMenu(
-                                          context, itemKey, index, category);
-                                    },
-                                    child: CustomCategoryItem(
-                                      key: itemKey, // Assign the key here
-                                      categoryImage: controller
-                                              .categoryList[index].image ??
-                                          '',
-                                      categoryName:
-                                          controller.categoryList[index].name ??
-                                              '',
-                                    ),
-                                  ),
-                                );
-                              },
+                    child: Column(
+                      children: [
+                        Container(
+                          //height: h * 0.1,
+                          width: double.infinity,
+                          padding: EdgeInsets.only(
+                              top: 30.h, left: 15.w, right: 15.w, bottom: 10.h),
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.r),
+                              bottomRight: Radius.circular(20.r),
                             ),
                           ),
-                          SizedBox(height: 20.h),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Best Selling',
-                                style: Styles.textStyle18,
+                              Row(
+                                children: [
+                                  Text(
+                                    'Hi, ${authController.userModel.name}',
+                                    style: Styles.textStyle24.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing: 1,
+                                      wordSpacing: 2,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  IconButton(
+                                    onPressed: () {
+                                      Get.to(() => const NotificationsView());
+                                    },
+                                    icon: Icon(
+                                      Icons.notifications,
+                                      color: Colors.white,
+                                      size: 30.sp,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              CustomButton(
-                                buttonText: 'ADD',
-                                fixedSize: Size(w * 0.2, 25.h),
-                                onPressed: () {
-                                  controller.resetPickedImage();
-                                  showModalBottomSheet(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20.r),
-                                          topRight: Radius.circular(20.r),
+                              SizedBox(height: 15.h),
+                              CustomSearchTextField(
+                                //controller: controller.searchController,
+                                onChanged: (value) {
+                                  controller.updateSearchQuery(
+                                      value); // Update the filtered list based on the input
+                                },
+                                // onSubmitted: (value) {
+                                //   controller.searchProducts(value);
+                                // },
+                              ),
+                              SizedBox(height: 10.h),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: 16.w,
+                            right: 10.w,
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 30.h),
+                              Row(
+                                children: [
+                                  Text(
+                                    textAlign: TextAlign.start,
+                                    'Categories',
+                                    style: Styles.textStyle18,
+                                  ),
+                                  const Spacer(),
+                                  CustomButton(
+                                    fixedSize: Size(w * 0.2, 25.h),
+                                    buttonText: 'ADD',
+                                    onPressed: () {
+                                      controller.resetPickedImage();
+                                      showModalBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20.r),
+                                              topRight: Radius.circular(20.r),
+                                            ),
+                                          ),
+                                          isScrollControlled: true,
+                                          useSafeArea: true,
+                                          enableDrag: true,
+                                          showDragHandle: true,
+                                          isDismissible: true,
+                                          context: context,
+                                          builder: (context) =>
+                                              AddCategoryBottomSheet(
+                                                widgetTitle:
+                                                    'Create New Category',
+                                                buttonName: 'ADD',
+                                              ));
+                                    },
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 15.h),
+                              SizedBox(
+                                height: h * 0.14,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: controller.categoryList.length,
+                                  itemBuilder: (context, index) {
+                                    final CategoryModel category =
+                                        controller.categoryList[index];
+                                    // Create a unique key for each item
+                                    final GlobalKey itemKey = GlobalKey();
+                                    return Padding(
+                                      padding: EdgeInsets.only(right: 10.w),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Get.to(() => ProductListByCategory(
+                                                category: controller
+                                                        .categoryList[index]
+                                                        .name ??
+                                                    '',
+                                              ));
+                                        },
+                                        onLongPress: () {
+                                          showCustomPopupMenu(context, itemKey,
+                                              index, category);
+                                        },
+                                        child: CustomCategoryItem(
+                                          key: itemKey, // Assign the key here
+                                          categoryImage: controller
+                                                  .categoryList[index].image ??
+                                              '',
+                                          categoryName: controller
+                                                  .categoryList[index].name ??
+                                              '',
                                         ),
                                       ),
-                                      isScrollControlled: true,
-                                      useSafeArea: true,
-                                      enableDrag: true,
-                                      showDragHandle: true,
-                                      isDismissible: true,
-                                      context: context,
-                                      builder: (context) =>
-                                          AddProductBottomSheet(
-                                            widgetTitle: 'Create New Product',
-                                            buttonName: 'Create',
-                                          ));
-                                },
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 20.h),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Best Selling',
+                                    style: Styles.textStyle18,
+                                  ),
+                                  CustomButton(
+                                    buttonText: 'ADD',
+                                    fixedSize: Size(w * 0.2, 25.h),
+                                    onPressed: () {
+                                      controller.resetPickedImage();
+                                      showModalBottomSheet(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20.r),
+                                              topRight: Radius.circular(20.r),
+                                            ),
+                                          ),
+                                          isScrollControlled: true,
+                                          useSafeArea: true,
+                                          enableDrag: true,
+                                          showDragHandle: true,
+                                          isDismissible: true,
+                                          context: context,
+                                          builder: (context) =>
+                                              AddProductBottomSheet(
+                                                widgetTitle:
+                                                    'Create New Product',
+                                                buttonName: 'Create',
+                                              ));
+                                    },
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.h),
+                              SizedBox(
+                                height: h / 2.3,
+                                child: controller.isLoading.value
+                                    ? const Center(
+                                        child: CircularProgressIndicator(
+                                            color: kPrimaryColor),
+                                      )
+                                    : controller.filteredProductList.isEmpty
+                                        ? Center(
+                                            child: Text(
+                                              'No products found.',
+                                              style: Styles.textStyle18,
+                                            ),
+                                          )
+                                        : ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: controller
+                                                .filteredProductList.length,
+                                            itemBuilder: (context, index) {
+                                              final product = controller
+                                                  .filteredProductList[index];
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: 20.w),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Get.to(DetailsScreen(
+                                                        model: product));
+                                                  },
+                                                  child: CustomProductItem(
+                                                    // productImage:
+                                                    //     controller.productList[index].image ??
+                                                    //         '',
+                                                    // productName:
+                                                    //     controller.productList[index].name ??
+                                                    //         '',
+                                                    // productPrice:
+                                                    //     controller.productList[index].price ??
+                                                    //         '',
+                                                    // description: controller
+                                                    //         .productList[index].description ??
+                                                    //     '',
+                                                    //productModel: controller.productList[index],
+                                                    productModel: product,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10.h),
-                          SizedBox(
-                            height: h / 2.3,
-                            child: controller.isLoading.value
-                                ? const Center(
-                                    child: CircularProgressIndicator(
-                                        color: kPrimaryColor),
-                                  )
-                                : controller.filteredProductList.isEmpty
-                                    ? Center(
-                                        child: Text(
-                                          'No products found.',
-                                          style: Styles.textStyle18,
-                                        ),
-                                      )
-                                    : ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: controller
-                                            .filteredProductList.length,
-                                        itemBuilder: (context, index) {
-                                          final product = controller
-                                              .filteredProductList[index];
-                                          return Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 20.w),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Get.to(DetailsScreen(
-                                                    model: product));
-                                              },
-                                              child: CustomProductItem(
-                                                // productImage:
-                                                //     controller.productList[index].image ??
-                                                //         '',
-                                                // productName:
-                                                //     controller.productList[index].name ??
-                                                //         '',
-                                                // productPrice:
-                                                //     controller.productList[index].price ??
-                                                //         '',
-                                                // description: controller
-                                                //         .productList[index].description ??
-                                                //     '',
-                                                //productModel: controller.productList[index],
-                                                productModel: product,
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );

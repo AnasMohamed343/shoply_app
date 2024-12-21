@@ -83,7 +83,7 @@ class _CustomSuccessScreenState extends State<CustomSuccessScreen>
 
               // Button to proceed
               CustomButton(
-                buttonText: 'Go to Home',
+                buttonText: 'Continue',
                 onPressed: widget.onPressed,
                 borderRadius: 15,
                 fixedSize: Size(w * 0.5, h * 0.06),

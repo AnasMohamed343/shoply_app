@@ -19,7 +19,7 @@ class CustomSearchTextField extends StatelessWidget {
       cursorColor: kPrimaryColor,
       decoration: InputDecoration(
         filled: true,
-        fillColor: kLightGrey,
+        fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(
           horizontal: 25.w,
           vertical: 10.h,

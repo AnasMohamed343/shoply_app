@@ -50,14 +50,15 @@ class CartTabView extends StatelessWidget {
                           Container(
                             height: h * 0.25,
                             width: w * 0.6,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 image: DecorationImage(
-                              image: const AssetImage(AssetsManager.emptyCart),
+                              image: AssetImage(AssetsManager.emptyCart),
                             )),
                           ),
                           Text(
-                            "Your Cart is empty",
-                            style: Styles.textStyle20,
+                            "Cart is empty",
+                            style:
+                                Styles.textStyle20.copyWith(color: Colors.red),
                           ),
                         ],
                       )),

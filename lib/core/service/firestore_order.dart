@@ -23,6 +23,8 @@ class FireStoreOrder extends GetxController {
           .collection(kUserCollection)
           .doc(userId)
           .collection(kOrdersCollection)
+          .orderBy('orderDate',
+              descending: true) // Order by orderDate, newest first
           .get();
       return result.docs
           .map((documentSnapshot) => OrderModel.fromSnapshot(documentSnapshot))
