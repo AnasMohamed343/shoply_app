@@ -52,7 +52,7 @@ class _CustomSuccessScreenState extends State<CustomSuccessScreen>
               // Lottie animation for order completion
               Lottie.network(
                 'https://lottie.host/d4d5aff2-96c9-4402-8cb4-227a9a2570f2/GghJnuHVQP.json',
-                repeat: true,
+                repeat: false,
                 backgroundLoading: true,
                 width: w * 0.6,
                 height: h * 0.6,
@@ -83,7 +83,7 @@ class _CustomSuccessScreenState extends State<CustomSuccessScreen>
 
               // Button to proceed
               CustomButton(
-                buttonText: 'Continue',
+                buttonText: Text('Continue', style: Styles.textStyle14),
                 onPressed: widget.onPressed,
                 borderRadius: 15,
                 fixedSize: Size(w * 0.5, h * 0.06),

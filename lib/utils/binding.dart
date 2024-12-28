@@ -9,6 +9,7 @@ import 'package:shoply/view_model/delivery_viewmodel.dart';
 import 'package:shoply/view_model/explore_screen_view_model.dart';
 import 'package:shoply/view_model/notification_viewmodel.dart';
 import 'package:shoply/view_model/order_viewmodel.dart';
+import 'package:shoply/view_model/user_data_viewmodel.dart';
 
 class Binding extends Bindings {
   //Binding = Dependency Injection
@@ -25,5 +26,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => DeliveryViewModel());
     Get.lazyPut(() => OrderViewModel());
     Get.lazyPut(() => DashboardViewModel());
+    Get.lazyPut(() => UserDataViewModel());
   }
 }

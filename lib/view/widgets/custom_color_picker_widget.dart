@@ -65,7 +65,8 @@ class CustomColorPickerWidget extends StatelessWidget {
                           ),
                           actions: <Widget>[
                             CustomButton(
-                                buttonText: 'Got it',
+                                buttonText:
+                                    Text('Got it', style: Styles.textStyle14),
                                 onPressed: () {
                                   controller.color = controller.pickerColor;
                                   onSaved;

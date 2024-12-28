@@ -139,7 +139,7 @@ class CustomAddNotificationBottomSheet extends StatelessWidget {
                           color: kPrimaryColor,
                         )
                       : CustomButton(
-                          buttonText: addNotification,
+                          buttonText: Text(addNotification),
                           fixedSize: Size(w, h / 15),
                           onPressed: () async {
                             if (formKey.currentState!.validate()) {

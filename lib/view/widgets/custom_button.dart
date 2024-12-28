@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
-  final String buttonText;
+  final Widget buttonText;
   final void Function()? onPressed;
   Size? fixedSize = Size(311.w, 50.h);
   Color? foregroundColor, backgroundColor, borderColor = kPrimaryColor;
@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
         foregroundColor: foregroundColor ?? Colors.white,
         side: BorderSide(color: borderColor ?? kPrimaryColor, width: 1.w),
       ),
-      child: Text(buttonText, style: Styles.textStyle14),
+      child: buttonText, //Text(buttonText, style: Styles.textStyle14),
     );
   }
 }

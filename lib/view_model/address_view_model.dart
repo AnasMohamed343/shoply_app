@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/assets-manager.dart';
 import 'package:shoply/core/common/custom_full_screen_loader.dart';
 import 'package:shoply/core/common/widgets/custom_section_heading.dart';
@@ -143,7 +144,7 @@ class AddressViewModel extends GetxController {
       Navigator.of(Get.context!).pop();
     } catch (e) {
       //remove loader
-      _loading.value = false;
+      //_loading.value = false;
       Get.snackbar(
         'Error in adding address',
         e.toString(),
@@ -199,7 +200,8 @@ class AddressViewModel extends GetxController {
                 width: double.infinity,
                 child: CustomButton(
                   fixedSize: Size(double.infinity, 40.h),
-                  buttonText: 'Add new address',
+                  buttonText:
+                      Text('Add New Address', style: Styles.textStyle14),
                   onPressed: () => Get.to(const AddNewAddressScreen()),
                 ),
               ),

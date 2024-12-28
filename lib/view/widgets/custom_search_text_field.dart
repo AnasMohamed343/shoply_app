@@ -29,13 +29,13 @@ class CustomSearchTextField extends StatelessWidget {
           minWidth: 25.w,
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.r), // Rounded corners
+          borderRadius: BorderRadius.circular(10.r), // Rounded corners
           borderSide: const BorderSide(
               color: Colors.transparent), // Removes the visible border
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius:
-              BorderRadius.circular(25.r), // Rounded corners when focused
+              BorderRadius.circular(10.r), // Rounded corners when focused
           borderSide: const BorderSide(
               color: Colors.transparent), // Highlight border on focus
         ),

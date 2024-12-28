@@ -89,7 +89,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
+import 'package:shoply/core/common/widgets/custom_profile_picture.dart';
 import 'package:shoply/model/category_model.dart';
+import 'package:shoply/view/account_tab_view/account_tab_view.dart';
+import 'package:shoply/view/control_view.dart';
 import 'package:shoply/view/details_screen.dart';
 import 'package:shoply/view/notifications_view/notifications_view.dart';
 import 'package:shoply/view/products_by_category/product_list_by_category.dart';
@@ -114,7 +117,6 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
 
-    final authController = AuthViewModel.instance;
     return GetBuilder<ExploreScreenViewModel>(
         init: ExploreScreenViewModel(),
         builder: (controller) {
@@ -145,19 +147,38 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                             children: [
                               Row(
                                 children: [
-                                  Text(
-                                    'Hi, ${authController.userModel.name}',
-                                    style: Styles.textStyle24.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 1,
-                                      wordSpacing: 2,
-                                    ),
-                                  ),
+                                  GetBuilder<AuthViewModel>(
+                                      builder: (controller) {
+                                    controller.fetchUserData();
+                                    final user = controller.userModel;
+                                    return Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            Get.to(() => AccountTabView());
+                                          },
+                                          child: CustomProfilePicture(
+                                              w: w * 0.05, user: user),
+                                        ),
+                                        SizedBox(width: 7.w),
+                                        Text(
+                                          'Hi, ${user.name}',
+                                          style: Styles.textStyle20.copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 1,
+                                            wordSpacing: 2,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
                                   const Spacer(),
                                   IconButton(
                                     onPressed: () {
-                                      Get.to(() => const NotificationsView());
+                                      Get.to(
+                                        () => AccountTabView(),
+                                      );
                                     },
                                     icon: Icon(
                                       Icons.notifications,
@@ -167,7 +188,7 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15.h),
+                              SizedBox(height: 8.h),
                               CustomSearchTextField(
                                 //controller: controller.searchController,
                                 onChanged: (value) {
@@ -184,12 +205,13 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
+                            top: 25.h,
                             left: 16.w,
                             right: 10.w,
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: 30.h),
+                              //SizedBox(height: 30.h),
                               Row(
                                 children: [
                                   Text(
@@ -200,7 +222,8 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                   const Spacer(),
                                   CustomButton(
                                     fixedSize: Size(w * 0.2, 25.h),
-                                    buttonText: 'ADD',
+                                    buttonText:
+                                        Text('ADD', style: Styles.textStyle14),
                                     onPressed: () {
                                       controller.resetPickedImage();
                                       showModalBottomSheet(
@@ -276,7 +299,8 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                     style: Styles.textStyle18,
                                   ),
                                   CustomButton(
-                                    buttonText: 'ADD',
+                                    buttonText:
+                                        Text('ADD', style: Styles.textStyle14),
                                     fixedSize: Size(w * 0.2, 25.h),
                                     onPressed: () {
                                       controller.resetPickedImage();

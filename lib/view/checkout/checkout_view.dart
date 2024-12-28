@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/core/Styles.dart';
 import 'package:shoply/utils/enum.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
 import 'package:shoply/view_model/cart_viewmodel.dart';
@@ -40,7 +41,7 @@ class CheckoutView extends StatelessWidget {
             backgroundColor: Colors.white,
             body: Padding(
               padding: EdgeInsets.only(
-                  right: w * 0.02, left: w * 0.02, bottom: h * 0.02),
+                  right: w * 0.03, left: w * 0.03, bottom: h * 0.02),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -140,7 +141,8 @@ class CheckoutView extends StatelessWidget {
                             ? const SizedBox()
                             : CustomButton(
                                 fixedSize: Size(w * 0.45, h * 0.06),
-                                buttonText: 'BACK',
+                                buttonText:
+                                    Text('Back', style: Styles.textStyle14),
                                 onPressed: () {
                                   controller.changeIndex(controller.index - 1);
                                 },
@@ -151,7 +153,8 @@ class CheckoutView extends StatelessWidget {
                         controller.index == 1
                             ? CustomButton(
                                 fixedSize: Size(w * 0.45, h * 0.06),
-                                buttonText: 'Checkout',
+                                buttonText:
+                                    Text('Checkout', style: Styles.textStyle14),
                                 onPressed: double.parse(totalPrice) > 0
                                     ? () => orderController
                                         .processOrder(double.parse(totalPrice))
@@ -161,7 +164,8 @@ class CheckoutView extends StatelessWidget {
                               )
                             : CustomButton(
                                 fixedSize: Size(w * 0.45, h * 0.06),
-                                buttonText: 'NEXT',
+                                buttonText:
+                                    Text('Next', style: Styles.textStyle14),
                                 onPressed: () {
                                   controller.changeIndex(controller.index + 1);
                                 },

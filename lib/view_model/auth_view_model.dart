@@ -131,18 +131,24 @@
 //   }
 // }
 
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoply/core/service/firestore_user.dart';
 import 'package:shoply/model/user_model.dart';
+import 'package:shoply/utils/image_functions.dart';
 import 'package:shoply/view/Explore_tab_view/explore_tab_view.dart';
 import 'package:shoply/view/auth/login_screen/login_screen.dart';
 import 'package:shoply/view/control_view.dart';
 import 'package:shoply/view/home_Screen.dart';
 
 class AuthViewModel extends GetxController {
+  ValueNotifier<bool> get loading => _loading;
+  final ValueNotifier<bool> _loading = ValueNotifier(false);
+
   static AuthViewModel get instance => Get.find();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -157,6 +163,7 @@ class AuthViewModel extends GetxController {
   String get user => _user.value?.email ?? '';
 
   UserModel? _cachedUserModel;
+  Uint8List? pickedImage;
 
   @override
   void onInit() {
@@ -183,6 +190,19 @@ class AuthViewModel extends GetxController {
           name: _user.value?.displayName ?? '',
           picture: _user.value?.photoURL ?? '',
         );
+  }
+
+  pickImage(String pickType) async {
+    Uint8List? temp;
+    if (pickType == 'gallery') {
+      temp = await ImageFunctions.galleryPicker();
+    } else if (pickType == 'camera') {
+      temp = await ImageFunctions.cameraPicker();
+    }
+    if (temp != null) {
+      pickedImage = temp;
+      update();
+    }
   }
 
   // @override
@@ -232,13 +252,19 @@ class AuthViewModel extends GetxController {
   // }
   void signInWithEmailAndPassword() async {
     try {
+      //start loading
+      _loading.value = true;
+      update();
       await _auth.signInWithEmailAndPassword(
         email: email.text.trim(),
         password: password.text.trim(),
       );
       //Get.offAll(ExploreTabView());
       Get.offAll(ControlView());
+
+      _loading.value = false;
     } on FirebaseAuthException catch (e) {
+      _loading.value = false;
       print('signIn error: $e'); // Print detailed error information
       if ((e.code == 'user-not-found') || (e.code == 'wrong-password')) {
         Get.snackbar(
@@ -258,6 +284,7 @@ class AuthViewModel extends GetxController {
         );
       }
     } catch (e) {
+      _loading.value = false;
       print('signIn error: $e'); // Print general error information
       Get.snackbar(
         'Error login account',
@@ -267,10 +294,14 @@ class AuthViewModel extends GetxController {
         colorText: Colors.white,
       );
     }
+    update();
   }
 
   void createAccountWithEmailAndPassword() async {
     try {
+      //start loading
+      _loading.value = true;
+      update();
       if (email != null && password != null) {
         UserCredential userCredential =
             await _auth.createUserWithEmailAndPassword(
@@ -279,7 +310,10 @@ class AuthViewModel extends GetxController {
         );
         saveUser(userCredential);
         Get.offAll(LoginScreen());
+
+        _loading.value = false;
       } else {
+        _loading.value = false;
         Get.snackbar(
           'Error',
           'Email and Password cannot be null',
@@ -289,6 +323,7 @@ class AuthViewModel extends GetxController {
         );
       }
     } catch (e) {
+      _loading.value = false;
       print('createAccount error: $e');
       Get.snackbar(
         'Error register account',
@@ -298,6 +333,7 @@ class AuthViewModel extends GetxController {
         colorText: Colors.white,
       );
     }
+    update();
   }
 
   void saveUser(UserCredential user) async {
@@ -312,6 +348,6 @@ class AuthViewModel extends GetxController {
   void signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
-    Get.offAll(LoginScreen());
+    Get.offAll(() => LoginScreen());
   }
 }

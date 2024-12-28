@@ -9,9 +9,10 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   Color? fieldNameColor = kGreyColor,
       hintTextColor = kGreyColor.withOpacity(0.5);
-  final Widget? prefixIcon;
+  final Widget? prefixIcon, suffixIcon;
   final InputBorder? border;
   TextEditingController? controller = TextEditingController();
+  bool readOnly;
   CustomTextFormField({
     super.key,
     this.hintText,
@@ -23,6 +24,8 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.border,
     this.controller,
+    this.readOnly = false,
+    this.suffixIcon,
   });
 
   @override
@@ -40,6 +43,7 @@ class CustomTextFormField extends StatelessWidget {
           cursorColor: kPrimaryColor,
           onSaved: onSave,
           validator: validator,
+          readOnly: readOnly,
           decoration: InputDecoration(
               hintText: hintText,
               hintStyle: Styles.textStyle14.copyWith(
@@ -47,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
               fillColor: Colors.white,
               hoverColor: kPrimaryColor,
               prefixIcon: prefixIcon,
+              suffixIcon: suffixIcon,
               enabledBorder: border ??
                   UnderlineInputBorder(
                     borderSide: BorderSide(color: kLightGrey),

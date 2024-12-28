@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/core/assets-manager.dart';
 
 class CustomContainerImagePicker extends StatelessWidget {
   ImageProvider<Object>? backgroundImage;
@@ -29,7 +30,8 @@ class CustomContainerImagePicker extends StatelessWidget {
             ? kGreyColor.withOpacity(0.6)
             : Colors.transparent,
         image: DecorationImage(
-          image: backgroundImage ?? Image.network('').image,
+          image: backgroundImage ??
+              Image.asset(AssetsManager.emptyGrayImage).image,
           fit: BoxFit.cover,
         ),
         shape: shape,

@@ -35,7 +35,7 @@ class Summary extends StatelessWidget {
                   itemCount: controller.cartProductList?.length ?? 0,
                   separatorBuilder: (context, index) {
                     return SizedBox(
-                      width: w * 0.02,
+                      width: w * 0.03,
                     );
                   },
                   itemBuilder: (context, index) {
@@ -116,16 +116,12 @@ class Summary extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: h * 0.01,
-                    ),
-                    const CustomDivider(),
-                    SizedBox(
-                      height: h * 0.01,
+                    const CustomDivider(
+                      verticalPadding: 8,
                     ),
                     CustomBillingPaymentSection(),
                     SizedBox(
-                      height: h * 0.01,
+                      height: h * 0.02,
                     ),
                     CustomBillingAddressSection(),
                   ],

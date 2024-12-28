@@ -19,4 +19,5 @@ abstract class AssetsManager {
   static const String loadingAnimation =
       'assets/animations/loading_animation.json';
   static const String emptyCart = 'assets/images/cartEmpty.webp';
+  static const String emptyGrayImage = 'assets/images/empty_gray_image.jpg';
 }

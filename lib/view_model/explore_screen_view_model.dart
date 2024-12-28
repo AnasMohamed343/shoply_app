@@ -8,18 +8,19 @@ import 'package:shoply/core/service/firestore_product.dart';
 import 'package:shoply/model/category_model.dart';
 import 'package:shoply/model/product_model.dart';
 import 'package:shoply/utils/image_functions.dart';
+import 'package:shoply/view_model/auth_view_model.dart';
 
 class ExploreScreenViewModel extends GetxController {
-  ValueNotifier<bool> _isLoading = ValueNotifier(false);
+  final ValueNotifier<bool> _isLoading = ValueNotifier(false);
 
   ValueNotifier<bool> get isLoading => _isLoading;
 
-  List<CategoryModel> _categoryList = [];
+  final List<CategoryModel> _categoryList = [];
 
   List<CategoryModel> get categoryList => _categoryList;
 
-  List<ProductModel> _productList = [];
-  List<ProductModel> _productListByCategory = [];
+  final List<ProductModel> _productList = [];
+  final List<ProductModel> _productListByCategory = [];
 
   List<ProductModel> get productList => _productList;
   List<ProductModel> get productListByCategory => _productListByCategory;

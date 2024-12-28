@@ -8,7 +8,7 @@ class CustomAnimationLoaderWidget extends StatelessWidget {
   final String? text;
   final bool showAction;
   final VoidCallback? onActionPressed;
-  final String? actionText;
+  final Widget? actionText;
   CustomAnimationLoaderWidget(
       {super.key,
       required this.animationPath,

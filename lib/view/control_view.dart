@@ -22,6 +22,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/assets-manager.dart';
+import 'package:shoply/core/common/widgets/custom_profile_picture.dart';
 import 'package:shoply/view/auth/login_screen/login_screen.dart';
 import 'package:shoply/view/home_Screen.dart';
 import 'package:shoply/view_model/auth_view_model.dart';
@@ -30,8 +31,9 @@ import 'package:shoply/view_model/control_view_model.dart';
 class ControlView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //final double w = MediaQuery.of(context).size.width;
     final authViewModel = Get.find<AuthViewModel>();
-
+    //final user = authViewModel.userModel;
     return Obx(() {
       return authViewModel.user.isEmpty
           ? LoginScreen()
@@ -110,6 +112,7 @@ class ControlView extends StatelessWidget {
                           height: 18.h,
                           width: 18.w,
                         ),
+                        //icon: CustomProfilePicture(w: w * 0.04, user: user),
                         label: '',
                         activeIcon: Column(
                           children: [

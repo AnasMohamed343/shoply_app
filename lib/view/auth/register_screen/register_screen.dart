@@ -105,15 +105,22 @@ class RegisterScreen extends GetWidget<AuthViewModel> {
                         style: Styles.textStyle14,
                       ),
                       SizedBox(height: 27.h),
-                      CustomButton(
-                        buttonText: 'SIGN UP',
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save(); // Save form fields
-                            controller.createAccountWithEmailAndPassword();
-                          }
-                        },
-                      ),
+                      GetBuilder<AuthViewModel>(builder: (controller) {
+                        return CustomButton(
+                          buttonText: controller.loading.value
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.0,
+                                )
+                              : Text('SIGN UP', style: Styles.textStyle14),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save(); // Save form fields
+                              controller.createAccountWithEmailAndPassword();
+                            }
+                          },
+                        );
+                      }),
                     ],
                   ),
                 ),

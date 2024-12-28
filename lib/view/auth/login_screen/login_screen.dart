@@ -108,13 +108,20 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                         style: Styles.textStyle14,
                       ),
                       SizedBox(height: 27.h),
-                      CustomButton(
-                          buttonText: 'SIGN IN',
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              controller.signInWithEmailAndPassword();
-                            }
-                          }),
+                      GetBuilder<AuthViewModel>(builder: (controller) {
+                        return CustomButton(
+                            buttonText: controller.loading.value
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2.0,
+                                  )
+                                : Text('SIGN IN', style: Styles.textStyle14),
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                controller.signInWithEmailAndPassword();
+                              }
+                            });
+                      }),
                     ],
                   ),
                 ),

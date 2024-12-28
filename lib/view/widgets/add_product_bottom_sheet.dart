@@ -223,7 +223,7 @@ class AddProductBottomSheet extends StatelessWidget {
                             color: kPrimaryColor,
                           ))
                         : CustomButton(
-                            buttonText: buttonName,
+                            buttonText: Text(buttonName),
                             fixedSize: Size(w, h / 15),
                             onPressed: () async {
                               if (controller.pickedImage != null ||

@@ -24,7 +24,7 @@ class OrderListItems extends StatelessWidget {
           final emptyWidget = CustomAnimationLoaderWidget(
             animationPath: AssetsManager.noDataFoundAnimation,
             showAction: true,
-            actionText: 'Let\'s fill it',
+            actionText: Text('Let\'s fill it', style: Styles.textStyle18),
             onActionPressed: () => Get.to(
               () => ControlView(),
             ),

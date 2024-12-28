@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoply/constants.dart';
+import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/common/widgets/custom_app_bar.dart';
 import 'package:shoply/view/widgets/custom_button.dart';
 import 'package:shoply/view/widgets/custom_text_form_field.dart';
@@ -126,7 +127,7 @@ class AddNewAddressScreen extends StatelessWidget {
                 CustomButton(
                   borderRadius: 10,
                   fixedSize: Size(double.infinity, h * 0.06),
-                  buttonText: 'Save',
+                  buttonText: Text('Save', style: Styles.textStyle14),
                   onPressed: () {
                     controller.addNewAddress();
                   },

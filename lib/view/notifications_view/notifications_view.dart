@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/common/widgets/custom_app_bar.dart';
 import 'package:shoply/view/notifications_view/custom_notification_list.dart';
 import 'package:shoply/view/widgets/custom_add_notification_bottomsheet.dart';
@@ -23,7 +24,8 @@ class NotificationsView extends StatelessWidget {
               children: [
                 const Spacer(),
                 CustomButton(
-                    buttonText: 'Add Notification',
+                    buttonText:
+                        Text('Add Notification', style: Styles.textStyle14),
                     onPressed: () {
                       showModalBottomSheet(
                           shape: RoundedRectangleBorder(
@@ -47,7 +49,7 @@ class NotificationsView extends StatelessWidget {
             GetBuilder<NotificationViewModel>(
                 init: NotificationViewModel(),
                 builder: (context) {
-                  return Expanded(child: CustomNotificationList());
+                  return const Expanded(child: CustomNotificationList());
                 }),
           ],
         ),

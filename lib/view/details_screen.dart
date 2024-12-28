@@ -226,7 +226,7 @@ class DetailsScreen extends StatelessWidget {
                       init: CartViewModel(),
                       builder: (controller) {
                         return CustomButton(
-                          buttonText: 'ADD',
+                          buttonText: Text('ADD', style: Styles.textStyle14),
                           fixedSize: Size(146.w, 50.h),
                           onPressed: () {
                             if (controller
