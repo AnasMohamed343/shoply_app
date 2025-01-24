@@ -91,6 +91,7 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 import 'package:shoply/core/common/widgets/custom_profile_picture.dart';
 import 'package:shoply/model/category_model.dart';
+import 'package:shoply/utils/enum.dart';
 import 'package:shoply/view/account_tab_view/account_tab_view.dart';
 import 'package:shoply/view/control_view.dart';
 import 'package:shoply/view/details_screen.dart';
@@ -177,7 +178,7 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                   IconButton(
                                     onPressed: () {
                                       Get.to(
-                                        () => AccountTabView(),
+                                        () => NotificationsView(),
                                       );
                                     },
                                     icon: Icon(
@@ -220,33 +221,46 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                     style: Styles.textStyle18,
                                   ),
                                   const Spacer(),
-                                  CustomButton(
-                                    fixedSize: Size(w * 0.2, 25.h),
-                                    buttonText:
-                                        Text('ADD', style: Styles.textStyle14),
-                                    onPressed: () {
-                                      controller.resetPickedImage();
-                                      showModalBottomSheet(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20.r),
-                                              topRight: Radius.circular(20.r),
-                                            ),
-                                          ),
-                                          isScrollControlled: true,
-                                          useSafeArea: true,
-                                          enableDrag: true,
-                                          showDragHandle: true,
-                                          isDismissible: true,
-                                          context: context,
-                                          builder: (context) =>
-                                              AddCategoryBottomSheet(
-                                                widgetTitle:
-                                                    'Create New Category',
-                                                buttonName: 'ADD',
-                                              ));
-                                    },
-                                  ),
+                                  GetBuilder<AuthViewModel>(
+                                      init: AuthViewModel(),
+                                      builder: (authController) {
+                                        return authController.userModel.role ==
+                                                AppRole.admin
+                                            ? CustomButton(
+                                                fixedSize: Size(w * 0.2, 25.h),
+                                                buttonText: Text('ADD',
+                                                    style: Styles.textStyle14),
+                                                onPressed: () {
+                                                  controller.resetPickedImage();
+                                                  showModalBottomSheet(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  20.r),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20.r),
+                                                        ),
+                                                      ),
+                                                      isScrollControlled: true,
+                                                      useSafeArea: true,
+                                                      enableDrag: true,
+                                                      showDragHandle: true,
+                                                      isDismissible: true,
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AddCategoryBottomSheet(
+                                                            widgetTitle:
+                                                                'Create New Category',
+                                                            buttonName: 'ADD',
+                                                          ));
+                                                },
+                                              )
+                                            : const SizedBox.shrink();
+                                      }),
                                 ],
                               ),
                               SizedBox(height: 15.h),
@@ -298,33 +312,47 @@ class ExploreTabView extends GetView<ExploreScreenViewModel> {
                                     'Best Selling',
                                     style: Styles.textStyle18,
                                   ),
-                                  CustomButton(
-                                    buttonText:
-                                        Text('ADD', style: Styles.textStyle14),
-                                    fixedSize: Size(w * 0.2, 25.h),
-                                    onPressed: () {
-                                      controller.resetPickedImage();
-                                      showModalBottomSheet(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(20.r),
-                                              topRight: Radius.circular(20.r),
-                                            ),
-                                          ),
-                                          isScrollControlled: true,
-                                          useSafeArea: true,
-                                          enableDrag: true,
-                                          showDragHandle: true,
-                                          isDismissible: true,
-                                          context: context,
-                                          builder: (context) =>
-                                              AddProductBottomSheet(
-                                                widgetTitle:
-                                                    'Create New Product',
-                                                buttonName: 'Create',
-                                              ));
-                                    },
-                                  ),
+                                  GetBuilder<AuthViewModel>(
+                                      init: AuthViewModel(),
+                                      builder: (authController) {
+                                        return authController.userModel.role ==
+                                                AppRole.admin
+                                            ? CustomButton(
+                                                buttonText: Text('ADD',
+                                                    style: Styles.textStyle14),
+                                                fixedSize: Size(w * 0.2, 25.h),
+                                                onPressed: () {
+                                                  controller.resetPickedImage();
+                                                  showModalBottomSheet(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                          topLeft:
+                                                              Radius.circular(
+                                                                  20.r),
+                                                          topRight:
+                                                              Radius.circular(
+                                                                  20.r),
+                                                        ),
+                                                      ),
+                                                      isScrollControlled: true,
+                                                      useSafeArea: true,
+                                                      enableDrag: true,
+                                                      showDragHandle: true,
+                                                      isDismissible: true,
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          AddProductBottomSheet(
+                                                            widgetTitle:
+                                                                'Create New Product',
+                                                            buttonName:
+                                                                'Create',
+                                                          ));
+                                                },
+                                              )
+                                            : const SizedBox.shrink();
+                                      }),
                                 ],
                               ),
                               SizedBox(height: 10.h),

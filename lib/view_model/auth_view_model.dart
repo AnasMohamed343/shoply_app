@@ -139,6 +139,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shoply/core/service/firestore_user.dart';
 import 'package:shoply/model/user_model.dart';
+import 'package:shoply/utils/enum.dart';
 import 'package:shoply/utils/image_functions.dart';
 import 'package:shoply/view/Explore_tab_view/explore_tab_view.dart';
 import 'package:shoply/view/auth/login_screen/login_screen.dart';
@@ -162,6 +163,9 @@ class AuthViewModel extends GetxController {
 
   String get user => _user.value?.email ?? '';
 
+  // get isAuthenticated user
+  bool get isAuthenticated => _auth.currentUser != null;
+
   UserModel? _cachedUserModel;
   Uint8List? pickedImage;
 
@@ -177,6 +181,7 @@ class AuthViewModel extends GetxController {
   Future<void> fetchUserData() async {
     _cachedUserModel =
         await FireStoreUser().getUser(_auth.currentUser?.uid ?? '');
+    update();
   }
 
   UserModel get userModel {
@@ -224,8 +229,9 @@ class AuthViewModel extends GetxController {
         idToken: googleSignInAuthentication.idToken,
       );
 
-      await _auth.signInWithCredential(credential).then((user) {
-        saveUser(user);
+      await _auth.signInWithCredential(credential).then((user) async {
+        await saveUser(user);
+        await fetchUserData();
         Get.offAll(ExploreTabView());
       });
     }
@@ -259,6 +265,7 @@ class AuthViewModel extends GetxController {
         email: email.text.trim(),
         password: password.text.trim(),
       );
+      await fetchUserData();
       //Get.offAll(ExploreTabView());
       Get.offAll(ControlView());
 
@@ -336,7 +343,7 @@ class AuthViewModel extends GetxController {
     update();
   }
 
-  void saveUser(UserCredential user) async {
+  Future<void> saveUser(UserCredential user) async {
     await FireStoreUser().addUserToFireStore(UserModel(
       userId: user.user?.uid ?? '',
       email: user.user?.email ?? '',
@@ -348,6 +355,43 @@ class AuthViewModel extends GetxController {
   void signOut() async {
     await _googleSignIn.signOut();
     await _auth.signOut();
+    // Clear the text controllers
+    email.clear();
+    password.clear();
     Get.offAll(() => LoginScreen());
   }
+
+  // Future<void> registerAdmin() async {
+  //   try {
+  //     _loading.value = true;
+  //     update();
+  //     // register user with email and password
+  //     await _auth.createUserWithEmailAndPassword(
+  //         email: 'admin@example.com', password: 'admin123');
+  //
+  //     // create admin record in firestore
+  //     await FireStoreUser().addUserToFireStore(UserModel(
+  //       userId: _auth.currentUser?.uid ?? '',
+  //       email: 'admin@example.com',
+  //       name: 'Admin',
+  //       picture: '',
+  //       role: AppRole.admin,
+  //     ));
+  //
+  //     _loading.value = false;
+  //
+  //     //redirect
+  //     FireStoreUser().screenRedirect();
+  //   } catch (e) {
+  //     _loading.value = false;
+  //     Get.snackbar(
+  //       'Error register account',
+  //       e.toString(),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  //   update();
+  // }
 }

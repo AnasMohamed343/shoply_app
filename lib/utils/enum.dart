@@ -29,3 +29,8 @@ enum PaymentMethods {
   razorpay,
   paytm
 }
+
+enum AppRole {
+  user,
+  admin,
+}

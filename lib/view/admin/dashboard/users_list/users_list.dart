@@ -23,6 +23,7 @@ class UsersList extends StatelessWidget {
               itemCount: controller.userList.length,
               itemBuilder: (context, index) {
                 return CustomUsersItem(
+                  userPicture: controller.userList[index].picture,
                   userName: controller.userList[index].name,
                   userEmail: controller.userList[index].email,
                 );

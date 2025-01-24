@@ -98,12 +98,12 @@ class RegisterScreen extends GetWidget<AuthViewModel> {
                           }
                         },
                       ),
-                      SizedBox(height: 13.h),
-                      Text(
-                        'Forgot Password?',
-                        textAlign: TextAlign.end,
-                        style: Styles.textStyle14,
-                      ),
+                      // SizedBox(height: 13.h),
+                      // Text(
+                      //   'Forgot Password?',
+                      //   textAlign: TextAlign.end,
+                      //   style: Styles.textStyle14,
+                      // ),
                       SizedBox(height: 27.h),
                       GetBuilder<AuthViewModel>(builder: (controller) {
                         return CustomButton(

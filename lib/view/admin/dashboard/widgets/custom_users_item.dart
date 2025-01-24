@@ -4,9 +4,9 @@ import 'package:shoply/constants.dart';
 import 'package:shoply/core/Styles.dart';
 
 class CustomUsersItem extends StatelessWidget {
-  final String userName, userEmail;
+  final String userName, userEmail, userPicture;
   const CustomUsersItem(
-      {super.key, required this.userName, required this.userEmail});
+      {super.key, required this.userName, required this.userEmail, required this.userPicture});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +25,8 @@ class CustomUsersItem extends StatelessWidget {
               CircleAvatar(
                 radius: w * 0.1,
                 backgroundColor: Colors.grey.shade200,
-                backgroundImage: const NetworkImage(
-                  "https://via.placeholder.com/150", // Replace with static/default image URL
+                backgroundImage:  NetworkImage(
+                  userPicture
                 ),
                 child: null,
               ),

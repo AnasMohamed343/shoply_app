@@ -9,6 +9,7 @@ import 'package:shoply/core/common/widgets/custom_divider.dart';
 import 'package:shoply/core/common/widgets/custom_profile_picture.dart';
 import 'package:shoply/main.dart';
 import 'package:shoply/model/user_model.dart';
+import 'package:shoply/utils/enum.dart';
 import 'package:shoply/view/Cart_tab_view/cart_tab_view.dart';
 import 'package:shoply/view/address/address_screen.dart';
 import 'package:shoply/view/admin/dashboard/dashboard_screen_view.dart';
@@ -117,15 +118,25 @@ class AccountTabView extends StatelessWidget {
                   },
                 ),
                 const CustomDivider(),
-                buildOptionRow(
-                  context,
-                  icon: Icons.dashboard,
-                  title: 'Dashboard',
-                  onTap: () {
-                    Get.to(DashboardScreenView());
-                  },
-                ),
-                const CustomDivider(),
+                GetBuilder<AuthViewModel>(
+                    init: AuthViewModel(),
+                    builder: (controller) {
+                      return controller.userModel.role == AppRole.admin ?
+                        Column(
+                        children: [
+                          buildOptionRow(
+                            context,
+                            icon: Icons.dashboard,
+                            title: 'Dashboard',
+                            onTap: () {
+                              Get.to(DashboardScreenView());
+                            },
+                          ),
+                          const CustomDivider(),
+                        ],
+                      )
+                          : const SizedBox.shrink();
+                    }),
                 GetBuilder<AuthViewModel>(
                     init: AuthViewModel(),
                     builder: (controller) {
